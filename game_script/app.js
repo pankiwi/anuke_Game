@@ -92,7 +92,7 @@ function animation() {
     if (animatior.animations[0].finish && !animatior.animations[1].finish) animatior.animations[1].enable = true
     if (animatior.animations[0].finish && animatior.animations[1].finish) {
       star_game = true
-  //    Interval()
+      //    Interval()
     }
   }
   player.update()
@@ -107,11 +107,10 @@ window.onload = () => {
 c.canvas.addEventListener("click", (event) => {
   event.preventDefault()
   if (star_game) {
-    let angle = Math.atan2(event.clientY - innerHeight / 2,event.clientX  - innerWidth/ 2) * 180 / Math.PI;
+    let angle = Math.atan2(event.clientY - innerHeight / 2, event.clientX - innerWidth / 2) * 180 / Math.PI;
 
     bulletsObject.push(new bullet(imgs.router, MAX_X_GAME / 2, MAX_Y_GAME / 2, 10, 15, angle, 30))
   } else {
     animatior.animations[0].finish = true
   }
 })
-
