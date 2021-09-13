@@ -30,6 +30,35 @@ function rand(min, max) {
 }
 
 
+function spawEnemy() {
+  let x, y, radiusEnemy, speed, angle
+  radiusEnemy = rand(40,60)
+
+  if (Math.random() < 0.5) {
+    x = Math.random() < 0.5 ? 0 - radiusEnemy : MAX_X_GAME + radiusEnemy
+    y = Math.random() * MAX_Y_GAME
+  } else {
+    y = Math.random() < 0.5 ? 0 - radiusEnemy : MAX_Y_GAME + radiusEnemy
+    x = Math.random() * MAX_X_GAME
+  }
+
+  angle = Math.atan2(MAX_Y_GAME / 2 - y, MAX_X_GAME / 2 - x) * 180 / Math.PI
+  speed = Math.floor(10 - radiusEnemy / 10) + rand(-2,2)
+  console.log(x + "/ y:" + y + "/ r:" + radiusEnemy + "/ s:" + speed + "/ a:" + angle + "/rs:" + radiusEnemy / 8)
+  enemyObject.push(new enemy(imgs.juction, x, y, radiusEnemy, speed, angle, radiusEnemy * 2))
+  enemys++
+}
+
+
+
+
+let interval_
+let Interval = function() {
+  interval_ = setInterval(() => {
+    spawEnemy()
+  }, spawTime)
+}
+
 function removeObject(index, array = []) {
   array.splice(index, 1)
 }
@@ -93,7 +122,7 @@ function animation() {
     if (animatior.animations[0].finish && animatior.animations[1].finish) {
       star_game = true
       UIConfig_.UIS[1].enable = true
-      //    Interval()
+      Interval()
     }
   }
   player.update()
@@ -109,8 +138,9 @@ c.canvas.addEventListener("click", (event) => {
   event.preventDefault()
   if (star_game) {
     let angle = Math.atan2(event.clientY - innerHeight / 2, event.clientX - innerWidth / 2) * 180 / Math.PI;
-
+    
     bulletsObject.push(new bullet(imgs.router, MAX_X_GAME / 2, MAX_Y_GAME / 2, 10, 15, angle, 30))
+    Sound_source_.playSound("shot",1)
   } else {
     animatior.animations[0].finish = true
   }
