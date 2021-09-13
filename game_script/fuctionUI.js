@@ -39,7 +39,7 @@ animationScreenUI = function(enable, timeSpeedUI, uis = []) {
         UIConfig_.UIS[this.uis[this.i - 1]].enable = false
       }
       this.i++
-      if (this.i >= this.uis.length) {
+      if (this.i >= this.uis.length + 1) {
         this.finish = true
       }
     }

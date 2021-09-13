@@ -92,6 +92,7 @@ function animation() {
     if (animatior.animations[0].finish && !animatior.animations[1].finish) animatior.animations[1].enable = true
     if (animatior.animations[0].finish && animatior.animations[1].finish) {
       star_game = true
+      UIConfig_.UIS[1].enable = true
       //    Interval()
     }
   }

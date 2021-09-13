@@ -46,5 +46,5 @@ UIConfig_.UIS.push(new ScreenUI_(false, () => {
 }))
 //animation
 
-animatior.animations.push(new animationScreenUI(false,500,[2,3,4]))
+animatior.animations.push(new animationScreenUI(false,200,[2,3,4]))
 animatior.animations.push(new animationScreenUI(false,100,[5,6,7,8,9,10,11]))
