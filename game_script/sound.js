@@ -8,7 +8,9 @@ let Sound_source_ = {
   next_round: [new Audio("./aud/next_round.wav")],
   multi_shot: [new Audio("./aud/shot_multi_0.wav"), new Audio("./aud/shot_multi_1.wav"), new Audio("./aud/shot_multi_2.wav")]
  },
-
+ setVolumen: function(category, target,volume){
+   this.Sounds_[category][target].volume = volume
+ },
  playSound: function(category, target) {
   var sound = this.Sounds_[category][target] ? this.Sounds_[category][target] : this.Sounds_.dead[0]
   sound.play()
@@ -22,3 +24,4 @@ let Sound_source_ = {
   sound.play()
  }
 }
+

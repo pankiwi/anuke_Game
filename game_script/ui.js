@@ -6,6 +6,7 @@ UIConfig_.UIS.push(new ScreenUI_(false, () => {
 UIConfig_.UIS.push(new ScreenUI_(false, () => {
  drawTxt(c, c.canvas.width / 5, c.canvas.height / 10, 200, 50, "black", "points:", "center", 1)
  drawTxt(c, c.canvas.width / 3.3, c.canvas.height / 10, 200, 50, "black", points, "left", 1)
+// drawTxt(c, c.canvas.width / 2, c.canvas.height / 10, 200, 50, "black", counterEnemy + " / " + 10 * dificulty, "center", 1)
 }))
 //1
 //guidescreend
@@ -43,4 +44,7 @@ UIConfig_.UIS.push(new ScreenUI_(false, () => {
 UIConfig_.UIS.push(new ScreenUI_(false, () => {
   drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.5, 400, 100, "black", "0", "center", 1)
 }))
-//
+//animation
+
+animatior.animations.push(new animationScreenUI(false,500,[2,3,4]))
+animatior.animations.push(new animationScreenUI(false,100,[5,6,7,8,9,10,11]))

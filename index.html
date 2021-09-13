@@ -2,43 +2,73 @@
 <html lang="en">
 
 <head>
- <meta charset="UTF-8">
- <meta http-equiv="X-UA-Compatible" content="IE=Edge">
- <meta name="viewport" content="width=device-width, initial-scale=1">
- <title>Invaders</title>
- <!-- HTML -->
- <!-- Custom Styles -->
- <style>
-  @font-face {
-   font-family: "bit";
-   src: url(fonts/EndlessBossBattleRegular-v7Ey.ttf);
-  }
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+  <title>anuke Game</title>
+  <!-- HTML -->
+  <!-- Custom Styles -->
+  <style>
+    @font-face {
+      font-family: "bit";
+      src: url(fonts/EndlessBossBattleRegular-v7Ey.ttf);
+    }
 
-  body {
-    margin: 0%;
-  }
+    * {
 
-  * {
-   font-family: bit
-  }
+      box-sizing: border-box;
+      margin: 0;
+      overflow: hidden;
+      padding: 0;
+      user-select: none;
+      font-family: bit;
+    }
 
- </style>
+    body,html {
+
+      height: 100%;
+      width: 100%;
+
+    }
+
+    canvas {
+      height: 100%;
+      width: 100%;
+      left: 0px;
+      position: fixed;
+      top: 0px;
+    }
+
+   
+  </style>
 </head>
 
 <body style="overflow: hidden">
- 
- <canvas>
-   sorry
- </canvas>
- <!-- Project -->
+  <canvas width="1000" height="1700">
+    sorry
+  </canvas>
+  <!-- Project -->
+  <script type="text/javascript">
+    function resize_canvas() {
+      canvas = document.querySelector("canvas");
+      if (canvas.width < window.innerWidth)
+      {
+        canvas.width = window.innerWidth;
+      }
+
+      if (canvas.height < window.innerHeight)
+      {
+        canvas.height = window.innerHeight;
+      }
+    }
+  </script>
   <script src="game_script/source_img.js"></script>
- <script src="game_script/sound.js"></script>
- <script src="game_script/fuctionUI.js"></script>
- <script src="game_script/ui.js"></script>
+  <script src="game_script/sound.js"></script>
+  <script src="game_script/fuctionUI.js"></script>
+  <script src="game_script/ui.js"></script>
   <script src="game_script/bullet.js"></script>
- <script src="game_script/entitys.js"></script>
- 
- <script src="game_script/app.js"></script>
+  <script src="game_script/entitys.js"></script>
+  <script src="game_script/app.js"></script>
 </body>
 
 </html>
