@@ -2,6 +2,7 @@ const c = document.querySelector("canvas").getContext("2d")
 
 let MAX_X_GAME = c.canvas.width
 let MAX_Y_GAME = c.canvas.height
+let radio_user = MAX_X_GAME/MAX_Y_GAME
 let star_game = false
 let debug = false
 let points = 0
@@ -13,12 +14,24 @@ let round = 1
 let stat_dif = 10
 let spawTime = 2000
 let enemys = 0
-let client_screend_radius_x = (MAX_X_GAME / innerWidth)
-let client_screend_radius_y = (MAX_Y_GAME / innerHeight)
+
 const player = new PlayerEntity(MAX_X_GAME / 2, MAX_Y_GAME / 2, imgs.anuke, 100, 60)
 
 //by Skatnext
 // rand: devuelve un numero random entre el primer y el segudo parametro
+
+function resize_canvas() {
+  if (c.canvas.height < window.innerHeight)
+  {
+    c.canvas.height = window.innerHeight;
+  }
+
+  if (c.canvas.width < window.innerWidth)
+  {
+    c.canvas.width = window.innerWidth;
+  }
+}
+
 
 function rand(min, max) {
   const argc = arguments.length;
@@ -145,3 +158,5 @@ c.canvas.addEventListener("click", (event) => {
     animatior.animations[0].finish = true
   }
 })
+
+document.addEventListener("resize", resize_canvas)

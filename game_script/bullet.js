@@ -6,7 +6,7 @@ class bullet {
   this.x = x
   this.y = y
   this.radius = radius
-  this.widthImg = widthImg
+  this.widthImg = widthImg * radio_user
   this.speed = speed
   this.angle = angle
   

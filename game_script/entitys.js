@@ -5,7 +5,7 @@ class PlayerEntity {
     this.y = y
     this.img = img
     this.radius = radius
-    this.widthImg = widthImg
+    this.widthImg = widthImg * radio_user
   }
   hitBox() {
     c.beginPath()
@@ -36,7 +36,7 @@ class enemy {
     this.x = x
     this.y = y
     this.radius = radius
-    this.widthImg = widthImg
+    this.widthImg = widthImg * radio_user
     this.speed = speed
     this.angle = angle
   }
@@ -78,7 +78,7 @@ class particle {
     this.x = x
     this.y = y
     this.radius = radius
-    this.widthImg = radius * 2
+    this.widthImg = (radius * 2) * radio_user
     this.speed = speed
     this.angle = angle
     this.alfa = 1

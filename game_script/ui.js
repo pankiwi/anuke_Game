@@ -4,7 +4,7 @@ UIConfig_.UIS.push(new ScreenUI_(false, () => {
 }))
 //gameMenu
 UIConfig_.UIS.push(new ScreenUI_(false, () => {
- drawTxt(c, c.canvas.width / 5, c.canvas.height / 10, 200, 50, "black", "points:", "center", 1)
+ drawTxt(c, c.canvas.width / 5, c.canvas.height / 10, 200 , 50, "black", "points:", "center", 1)
  drawTxt(c, c.canvas.width / 3.3, c.canvas.height / 10, 200, 50, "black", points, "left", 1)
 // drawTxt(c, c.canvas.width / 2, c.canvas.height / 10, 200, 50, "black", counterEnemy + " / " + 10 * dificulty, "center", 1)
 }))

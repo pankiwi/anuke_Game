@@ -99,8 +99,8 @@ function drawButton(c, button) {
 function drawTxt(c, x, y, width, widthTxt, color, txt, pos, alfa) {
   c.beginPath()
   c.fillStyle = color;
-  c.font = widthTxt + "px bit";
+  c.font = widthTxt * radio_user + "px bit";
   c.globalAlpha = alfa
   c.textAlign = pos
-  c.fillText(txt, x, y, width);
+  c.fillText(txt, x, y, width * radio_user);
 }
