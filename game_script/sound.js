@@ -26,3 +26,4 @@ let Sound_source_ = {
 }
 
 Sound_source_.setVolumen("shot",1,0.1)
+Sound_source_.setVolumen("dead",1,0.5)

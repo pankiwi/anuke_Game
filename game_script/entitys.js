@@ -1,10 +1,12 @@
 class PlayerEntity {
   dead = false
+  shild = false
+  unDraw = false
   constructor(x,y,img = new Image(), widthImg, radius) {
     this.x = x
     this.y = y
     this.img = img
-    this.radius = radius
+    this.radius = radius * radio_user
     this.widthImg = widthImg * radio_user
   }
   hitBox() {
@@ -19,14 +21,20 @@ class PlayerEntity {
 
 
   update() {
-
+    
     this.draw()
     if (debug) {
       this.hitBox()
     }
 
   }
-
+  hit(){
+    if(this.shild){
+      this.shild = false
+    }else{
+      this.dead = true
+    }
+  }
 }
 
 
@@ -35,7 +43,7 @@ class enemy {
     this.img = img
     this.x = x
     this.y = y
-    this.radius = radius
+    this.radius = radius * radio_user
     this.widthImg = widthImg * radio_user
     this.speed = speed
     this.angle = angle
@@ -56,10 +64,11 @@ class enemy {
   }
   update() {
     this.updateBullet()
+    this.draw()
     if (debug) {
       this.hitBox()
     }
-    this.draw()
+    
   }
   hit(index_enemy) {
     counterEnemy++

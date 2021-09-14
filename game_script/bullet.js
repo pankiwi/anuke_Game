@@ -5,7 +5,7 @@ class bullet {
   this.img = img
   this.x = x
   this.y = y
-  this.radius = radius
+  this.radius = radius * radio_user
   this.widthImg = widthImg * radio_user
   this.speed = speed
   this.angle = angle
@@ -27,10 +27,11 @@ class bullet {
  }
  update() {
   this.updateBullet()
+  this.draw()
   if (debug) {
    this.hitBox()
   }
-  this.draw()
+  
  }
  hit(index_bullet,enemy,index_enemy){
    

@@ -4,8 +4,8 @@ UIConfig_.UIS.push(new ScreenUI_(false, () => {
 }))
 //gameMenu
 UIConfig_.UIS.push(new ScreenUI_(false, () => {
- drawTxt(c, c.canvas.width / 5, c.canvas.height / 10, 200 , 50, "black", "points:", "center", 1)
- drawTxt(c, c.canvas.width / 3.3, c.canvas.height / 10, 200, 50, "black", points, "left", 1)
+ drawTxt(c, c.canvas.width / 5, c.canvas.height / 10, 400 , 100, "black", "points:", "center", 1)
+ drawTxt(c, c.canvas.width / 3.2, c.canvas.height / 10, 400, 100, "black", points, "left", 1)
 // drawTxt(c, c.canvas.width / 2, c.canvas.height / 10, 200, 50, "black", counterEnemy + " / " + 10 * dificulty, "center", 1)
 }))
 //1
@@ -44,7 +44,17 @@ UIConfig_.UIS.push(new ScreenUI_(false, () => {
 UIConfig_.UIS.push(new ScreenUI_(false, () => {
   drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.5, 400, 100, "black", "0", "center", 1)
 }))
+UIConfig_.UIS.push(new ScreenUI_(false, () => {
+  drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.5, 500, 150, "black", "anuke is dead", "center", 1)
+}))
+UIConfig_.UIS.push(new ScreenUI_(false, () => {
+  drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.5, 500, 150, "black", "juction team win", "center", 1)
+}))
+UIConfig_.UIS.push(new ScreenUI_(false, () => {
+  drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.5, 400, 100, "black", "you lost", "center", 1)
+}))
 //animation
 
 animatior.animations.push(new animationScreenUI(false,200,[2,3,4]))
 animatior.animations.push(new animationScreenUI(false,100,[5,6,7,8,9,10,11]))
+animatior.animations.push(new animationScreenUI(false,300,[12,13,14]))
