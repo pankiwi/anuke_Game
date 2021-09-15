@@ -121,7 +121,7 @@ UIConfig_ = {
   }
 }
 
-let animationScreenUI, animatior
+let animationScreenUI,animationScreenLoop, animatior
 animationScreenUI = function(enable, timeSpeedUI, uis = []) {
   this.enable = enable
   this.timeSpeedUI = timeSpeedUI
@@ -155,6 +155,35 @@ animationScreenUI = function(enable, timeSpeedUI, uis = []) {
 
   }
 }
+
+animationScreenLoop = function(enable, timeSpeedUI, uis = []) {
+  this.enable = enable
+  this.timeSpeedUI = timeSpeedUI
+  this.uis = uis
+  this.i = 0
+  this.time = 0
+  this.drawUI = function() {
+    this.time = ++this.time % this.timeSpeedUI + 1
+
+    if (this.time >= this.timeSpeedUI) {
+      this.time = 0
+      if (UIConfig_.UIS[this.uis[this.i]]) {
+        UIConfig_.UIS[this.uis[this.i]].enable = true
+      }
+      if (UIConfig_.UIS[this.uis[this.i - 1]]) {
+        UIConfig_.UIS[this.uis[this.i - 1]].enable = false
+      }
+      this.i++
+      if (this.i >= this.uis.length + 1) {
+        if(UIConfig_.UIS[this.uis[this.i - 1]])UIConfig_.UIS[this.uis[this.i - 1]].enable = false
+        this.i = 0
+        
+      }
+    }
+
+  }
+}
+
 
 animatior = {
   animations: [],
@@ -205,4 +234,13 @@ function drawTxt(c, x, y, width, widthTxt, color, txt, pos, alfa) {
   c.globalAlpha = alfa
   c.textAlign = pos
   c.fillText(txt, x, y, width * radio_user);
+}
+
+function drawTxtChaceWidth(c, x, y, width, widthTxt, color, txt = "", pos, alfa) {
+  c.beginPath()
+  c.fillStyle = color;
+  c.font = (widthTxt * radio_user)+ "px bit";
+  c.globalAlpha = alfa
+  c.textAlign = pos
+  c.fillText(txt, x, y, width * radio_user *txt.length );
 }

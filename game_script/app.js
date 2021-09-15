@@ -1,12 +1,41 @@
 function resize_canvas() {
   if (c.canvas.height < window.innerHeight)
   {
-    c.canvas.height = window.innerHeight;
+    if (window.innerHeight > 4700){
+      c.canvas.height = 4700
+      c.canvas.classList.add("canvas_outLine")
+    }else if (window.innerHeight > 3700) {
+      c.canvas.height = 3700
+      c.canvas.classList.add("canvas_outLine")
+    }else if (window.innerHeight > 2700) {
+      c.canvas.height = 2700
+      c.canvas.classList.add("canvas_outLine")
+    }else if (window.innerHeight > 1700) {
+      c.canvas.height = 1700
+      c.canvas.classList.add("canvas_outLine")
+    }
+      
+    
   }
-
   if (c.canvas.width < window.innerWidth)
   {
-    c.canvas.width = window.innerWidth;
+    if (window.innerWidth > 4000) {
+      c.canvas.width = 4000
+    } else if (window.innerWidth > 3000) {
+      c.canvas.width = 3000
+    } else if (window.innerWidth > 2000) {
+      c.canvas.width = 2000
+    } else if (window.innerWidth > 1000) {
+      c.canvas.width = 1000
+    }
+  
+  
+  }
+  if(window.innerWidth < 1000){
+    c.canvas.width = 1000
+  }
+  if (window.innerHeight < 1700) {
+    c.canvas.height = 1700
   }
   MAX_X_GAME = c.canvas.width
   MAX_Y_GAME = c.canvas.height
@@ -14,6 +43,26 @@ function resize_canvas() {
   
 }
 
+function resetGame(){
+  enemyObject = []
+  bulletsObject = []
+  points = 0
+  round = 1
+  stat_dif = 1
+  spawTime = 2000
+  TimeOut_active= false
+  atdead_particle = false
+  animatior.animations.forEach((animation_) => {
+    animation_.enable = false
+    animation_.finish = false
+    animation_.i = 0
+  })
+  UIConfig_.UIS.forEach((ui_) => {
+    ui_.enable = false
+  })
+  player = new PlayerEntity(MAX_X_GAME / 2, MAX_Y_GAME / 2, imgs.anuke, 100, 60)
+  animatior.animations[0].finish = true
+}
 const c = document.querySelector("canvas").getContext("2d")
 
 let MAX_X_GAME = 0
@@ -24,7 +73,7 @@ let debug = false
 let points = 0
 let bulletsObject = []
 let particleObject = []
-let enemyObject = []
+let enemyObject = [ ]
 let counterEnemy = 0
 let round = 1
 let stat_dif = 10
@@ -33,7 +82,7 @@ let enemys = 0
 resize_canvas()
 let buffer_output_ratio = 1 
 let bounding_rectangle = c.canvas.getBoundingClientRect();
-const player = new PlayerEntity(MAX_X_GAME / 2, MAX_Y_GAME / 2, imgs.anuke, 100, 60)
+let player = new PlayerEntity(MAX_X_GAME / 2, MAX_Y_GAME / 2, imgs.anuke, 100, 60)
 
 //by Skatnext
 // rand: devuelve un numero random entre el primer y el segudo parametro
@@ -132,10 +181,11 @@ function game() {
         particleObject.push(new particle(player.img,player.x,player.y,Math.random() * player.radius,Math.random() * 10,Math.random() * 360))
 
        TimeOut =  setTimeout(() => {
-          animatior.animations[2].enable = true
+         
           star_game = false
           TimeOut_active = true
           player.unDraw  = true
+          animatior.animations[2].enable = true
         },3000)
         
         if(TimeOut_active){
@@ -180,6 +230,11 @@ function animation() {
       
     }
     atdead_particle = true
+    
+    }
+    if (animatior.animations[2].finish && !animatior.animations[2].enable) {
+      animatior.animations[3].enable = true
+      UIConfig_.UIS[15].enable = true
     }
   }
   UIConfig_.drawAllUI()
@@ -193,12 +248,18 @@ window.onload = () => {
 c.canvas.addEventListener("click", (event) => {
   event.preventDefault()
   if (star_game && !player.dead) {
-    let angle = Math.atan2(event.clientY - innerHeight / 2, event.clientX - innerWidth / 2) * 180 / Math.PI;
+    let angle = Math.atan2(event.clientY -  innerHeight / 2, event.clientX - innerWidth/ 2) * 180 / Math.PI;
     
     bulletsObject.push(new bullet(imgs.router, MAX_X_GAME / 2, MAX_Y_GAME / 2, 10, 15, angle, 30))
     Sound_source_.playSound("shot",1)
-  } else {
+  } else if(!star_game){
     animatior.animations[0].finish = true
+  }
+  if(player.dead && player.unDraw ){
+    animatior.animations[2].finish = true
+  } 
+  if (player.dead && player.unDraw &&animatior.animations[2].finish && animatior.animations[3].enable) {
+    resetGame()
   }
   
 })
