@@ -70,7 +70,7 @@ UIConfig_.UIS.push(new ScreenUI_(false, () => {
 
 UIConfig_.UIS.push(new ScreenUI_(false, () => {
   drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.5, 1000, 300, "black", "Anuke Game", "center", 1)
-  drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.2, 600, 150, "black", "V1.5", "center", 1)
+  drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.2, 600, 150, "black", "V1.5.1", "center", 1)
 }))
 
 //animation
