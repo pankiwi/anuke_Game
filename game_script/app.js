@@ -12,7 +12,7 @@ let power_ups = [
     player.shild = true
   },
   rainTnt = () => {
-    let tnts = rand(3, 5)
+    let tnts = rand(2, 4)
     particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "Rain Tnt"))
     Sound_source_.playRandomSound("effect_item_use")
     
@@ -21,7 +21,7 @@ let power_ups = [
     }
   },
   frozenEnemy = () => {
-    if(Math.random() < 0.05){
+    if(Math.random() < 0.04){
       particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "¿ Jojo reference ?"))
       Sound_source_.playSound("dio",0)
     }else{
@@ -30,7 +30,7 @@ let power_ups = [
     Sound_source_.playRandomSound("effect_item_use")
     }
     enemyObject.forEach((enemy) => {
-      enemy.static = 100 //10s
+      enemy.static = 200 //20s
     })
   },
   MoreSpeedBullet = () => {
@@ -102,6 +102,7 @@ function resetGame() {
   round = 1
   stat_dif = 500
   spawTime = 2000
+  chace_power_up = 1
   TimeOut_active = false
   atdead_particle = false
   animatior.animations.forEach((animation_) => {
@@ -135,6 +136,7 @@ resize_canvas()
 let buffer_output_ratio = 1
 let bounding_rectangle = c.canvas.getBoundingClientRect();
 let player = new PlayerEntity(MAX_X_GAME / 2, MAX_Y_GAME / 2, imgs.anuke, 100, 60)
+let chace_power_up = 1
 let playerUpgrades = {
   speedBullet: 15,
   radiusBullet: 20,
@@ -187,7 +189,7 @@ function spawTnt() {
 }
 
 function spawEnemy() {
-  if (enemyObject.length <= 15) {
+  if (enemyObject.length <= 20) {
     
     let x, y, radiusEnemy, speed, angle
     radiusEnemy = rand(40, 70)
@@ -208,7 +210,7 @@ function spawEnemy() {
 }
 
 function spawBig_juction(){
-  if (enemyObject.length <= 15) {
+  if (enemyObject.length <= 20) {
   
     let x, y, radiusEnemy, speed, angle
     radiusEnemy = rand(70, 80)
@@ -229,7 +231,7 @@ function spawBig_juction(){
 }
 
 function powerUp() {
-  if (powerUpObject.length < 2) {
+  if (powerUpObject.length < 1) {
     let x, y, angle
 
 
@@ -270,13 +272,11 @@ let TimeOut_active = false
 let Interval = function() {
   interval_ = setInterval(() => {
     setDificulty = true
-    let rand1
-    rand1 = Math.random()
 
-  if (rand1 > 0.9) powerUp()
+  if (Math.random() * 100 < chace_power_up) powerUp()
     //spawTnt()
   spawEnemy()
-  if(Math.random() < 0.1) spawBig_juction()
+  if(Math.random() < 0.1 * (round/10)) spawBig_juction()
   }, spawTime)
 }
 
@@ -291,9 +291,13 @@ function game() {
     setDificulty = false
     if(spawTime > 1000){
     particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "More dificulty"))
+    Sound_source_.playSound("next_round",0)
     clearInterval(interval_)
     spawTime -= 50
-    stat_dif =  Math.floor(stat_dif * 1.4)
+    stat_dif =  Math.floor(stat_dif * 1.5)
+    
+    chace_power_up  = chace_power_up * 1.05 > 10? 10 :chace_power_up * 1.0&
+    
     ++round
     Interval()
 //    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3, 100, 1, 270, "" + spawTime + "-" + interval_ + "--" + round * stat_dif))
@@ -400,7 +404,7 @@ function animation() {
   requestAnimationFrame(animation)
 
   /*clear*/
-  c.fillStyle = "rgba(255,255,255,0.3"
+  c.fillStyle = "rgba(255,255,255,0.3)"
   c.fillRect(0, 0, c.canvas.width, c.canvas.height)
   particleObject.forEach((particle, index_particle) => {
     if (particle.alfa <= 0) {

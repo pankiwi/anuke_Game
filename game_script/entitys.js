@@ -85,12 +85,13 @@ class enemy {
 
   }
   hit(index_enemy) {
+    removeObject(index_enemy, enemyObject)
     counterEnemy++
     points = points + 50
-    for (let i = 0; i < Math.random() * 8 + 5; i++) {
+    for (let i = 0; i < rand(2,6); i++) {
       particleObject.push(new particle(this.img, this.x, this.y, Math.random() * 20 + 5, Math.random() * 10, Math.random() * 360))
     }
-    removeObject(index_enemy, enemyObject)
+    
     //  removeObject(index_bullet, bulletsObject)
   }
 }
@@ -102,7 +103,7 @@ class frag_enemy extends enemy{
     let dropEnemy = rand(2,3)
     counterEnemy++
     points = points + 50
-    for (let i = 0; i < Math.random() * 8 + 5; i++) {
+    for (let i = 0; i < rand(2,6); i++) {
       particleObject.push(new particle(this.img, this.x, this.y, Math.random() * 20 + 5, Math.random() * 10, Math.random() * 360))
     }
     for(let i = 0;i < dropEnemy;i++){
@@ -123,8 +124,8 @@ class box_power_up {
     this.img = imgs.router_big
     this.x = x
     this.y = y
-    this.radius = 120 * radio_user
-    this.widthImg = (120 * 2) * radio_user
+    this.radius = 80* radio_user
+    this.widthImg = (80 * 2) * radio_user
     this.speed = 4
     this.angle = angle
   }
@@ -151,14 +152,11 @@ class box_power_up {
 
   }
   hit(index_enemy) {
-
-    for (let i = 0; i < Math.random() * 8 + 5; i++) {
+    removeObject(index_enemy, powerUpObject)
+    for (let i = 0; i < rand(2,6); i++) {
       particleObject.push(new particle(this.img, this.x, this.y, Math.random() * 20 + 5, Math.random() * 10, Math.random() * 360))
     }
-    power_ups[Math.floor(Math.random() * power_ups.length)]()
-  //  power_ups[3]()
-    removeObject(index_enemy, powerUpObject)
-    //  removeObject(index_bullet, bulletsObject)
+    power_ups[rand(0,power_ups.length)]()
   }
 }
 
@@ -167,8 +165,8 @@ class tnt_router {
     this.img = imgs.tnt_router
     this.x = x
     this.y = y
-    this.radius = 100 * radio_user
-    this.widthImg = (100 * 2) * radio_user
+    this.radius = 80 * radio_user
+    this.widthImg = (80 * 2) * radio_user
     this.speed = 3
     this.angle = angle
   }
@@ -195,18 +193,19 @@ class tnt_router {
 
   }
   hit(index_enemy) {
-
+    removeObject(index_enemy, powerUpObject)
     let txt = ["bang", "boomb", "pow", "router's"]
-    for (let i = 0; i < Math.random() * 8 + 5; i++) {
+    for (let i = 0; i < rand(2,6); i++) {
       particleObject.push(new particle(this.img, this.x, this.y, Math.random() * 30 + 5, Math.random() * 10, Math.random() * 360))
     }
-    particleObject.push(new particle_txt(this.x, this.y, 70, 1, Math.random() * 360, txt[Math.floor(Math.random() * txt.length)]))
-    Sound_source_.playRandomSound("effect_item_use")
-    for (var i = 0; i < 20; i++) {
-      bulletsObject.push(new bullet(imgs.router, this.x, this.y, 20, 5, 18 * i, 40))
+    particleObject.push(new particle_txt(this.x, this.y, 70, 1, Math.random() * 360, txt[rand(0,txt.length)]))
+    
+    Sound_source_.playRandomSound("hit")
+    for (var i = 0; i < 10; i++) {
+      bulletsObject.push(new bullet(imgs.router, this.x, this.y,40,3, 36 * i, 40))
     }
-    removeObject(index_enemy, powerUpObject)
-    //  removeObject(index_bullet, bulletsObject)
+    
+
   }
 }
 
@@ -231,7 +230,7 @@ class particle {
     let angle = this.angle * (Math.PI / 180)
     this.x += Math.cos(angle) * this.speed
     this.y += Math.sin(angle) * this.speed
-    this.alfa -= 0.01
+    this.alfa -= 0.03
   }
   update() {
     this.updateBullet()
