@@ -168,7 +168,7 @@ class tnt_router {
     this.x = x
     this.y = y
     this.radius = 100 * radio_user
-    this.widthImg = (this.radius * 2) * radio_user
+    this.widthImg = (100 * 2) * radio_user
     this.speed = 3
     this.angle = angle
   }

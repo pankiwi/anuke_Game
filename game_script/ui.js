@@ -69,14 +69,13 @@ UIConfig_.UIS.push(new ScreenUI_(false, () => {
 }))
 
 UIConfig_.UIS.push(new ScreenUI_(false, () => {
-  drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.5, 400, 100, "black", "shild router", "center", 1)
+  drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.5, 1000, 300, "black", "Anuke Game", "center", 1)
+  drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.2, 600, 150, "black", "V1.5", "center", 1)
 }))
 
 //animation
 
-animatior.animations.push(new animationScreenUI(false,200,[2,3,4]))
+animatior.animations.push(new animationScreenUI(false,200,[18,2,3,4]))
 animatior.animations.push(new animationScreenUI(false,100,[5,6,7,8,9,10,11]))
 animatior.animations.push(new animationScreenUI(false,300,[12,13,14]))
 animatior.animations.push(new animationScreenLoop(false,50,[16,17]))
-
-animatior.animations.push(new animationScreenUI(false,10,[18]))
