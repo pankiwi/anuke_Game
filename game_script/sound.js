@@ -6,7 +6,8 @@ let Sound_source_ = {
   dead: [new Audio("./aud/dead_1.wav"), new Audio("./aud/dead_2.wav"), new Audio("./aud/dead_3.wav")],
   shot: [new Audio("./aud/shot_1.wav"), new Audio("./aud/shot_2.wav")],
   next_round: [new Audio("./aud/next_round.wav")],
-  multi_shot: [new Audio("./aud/shot_multi_0.wav"), new Audio("./aud/shot_multi_1.wav"), new Audio("./aud/shot_multi_2.wav")]
+  multi_shot: [new Audio("./aud/shot_multi_0.wav"), new Audio("./aud/shot_multi_1.wav"), new Audio("./aud/shot_multi_2.wav")],
+  dio: [new Audio("./aud/dio.mp3")]
  },
  setVolumen: function(category, target,volume){
    this.Sounds_[category][target].volume = volume

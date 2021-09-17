@@ -1,56 +1,108 @@
+let power_ups = [
+  superShotRouter = () => {
+    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "super router shot"))
+    Sound_source_.playRandomSound("effect_item_use")
+    for (var i = 0; i < 20; i++) {
+      bulletsObject.push(new bullet(imgs.router, MAX_X_GAME / 2, MAX_Y_GAME / 2, 40, 5, 18 * i, 80))
+    }
+  },
+  shildAnuke = () => {
+    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "anuke Hull"))
+    Sound_source_.playRandomSound("effect_item_use")
+    player.shild = true
+  },
+  rainTnt = () => {
+    let tnts = rand(3, 5)
+    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "Rain Tnt"))
+    Sound_source_.playRandomSound("effect_item_use")
+    
+    for (var i = 0; i < tnts; i++) {
+      spawTnt()
+    }
+  },
+  frozenEnemy = () => {
+    if(Math.random() < 0.05){
+      particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "¿ Jojo reference ?"))
+      Sound_source_.playSound("dio",0)
+    }else{
+    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "Frozen Enemys"))
+    
+    Sound_source_.playRandomSound("effect_item_use")
+    }
+    enemyObject.forEach((enemy) => {
+      enemy.static = 100 //10s
+    })
+  },
+  MoreSpeedBullet = () => {
+    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "Super Speed Bullet"))
+    Sound_source_.playRandomSound("effect_item_use")
+    playerUpgrades.speedBullet = playerUpgrades.speedBullet != playerUpgrades.max_speedBullet ? playerUpgrades.speedBullet + 5 : playerUpgrades.speedBullet
+  }
+  ]
+
+function killAllEnemys() {
+  enemyObject.forEach((enemy, index) => {
+    enemy.hit(index)
+  })
+}
+
+function getAnglePlayer(x,y) {
+  return Math.atan2(MAX_Y_GAME / 2 - y, MAX_X_GAME / 2 - x) * 180 / Math.PI
+}
+
 function resize_canvas() {
   if (c.canvas.height < window.innerHeight)
   {
-    if (window.innerHeight > 4700){
+    if (window.innerHeight > 4700) {
       c.canvas.height = 4700
-      c.canvas.classList.add("canvas_outLine")
-    }else if (window.innerHeight > 3700) {
-      c.canvas.height = 3700
-      c.canvas.classList.add("canvas_outLine")
-    }else if (window.innerHeight > 2700) {
-      c.canvas.height = 2700
-      c.canvas.classList.add("canvas_outLine")
-    }else if (window.innerHeight > 1700) {
-      c.canvas.height = 1700
-      c.canvas.classList.add("canvas_outLine")
-    }
-      
-    
-  }
-  if (c.canvas.width < window.innerWidth)
-  {
-    if (window.innerWidth > 4000) {
       c.canvas.width = 4000
-    } else if (window.innerWidth > 3000) {
+      c.canvas.classList.add("canvas_outLine")
+    } else if (window.innerHeight > 3700) {
+      c.canvas.height = 3700
       c.canvas.width = 3000
-    } else if (window.innerWidth > 2000) {
+      c.canvas.classList.add("canvas_outLine")
+    } else if (window.innerHeight > 2700) {
+      c.canvas.height = 2700
       c.canvas.width = 2000
-    } else if (window.innerWidth > 1000) {
+      c.canvas.classList.add("canvas_outLine")
+    } else if (window.innerHeight < 1700) {
+      c.canvas.height = 1700
       c.canvas.width = 1000
+      c.canvas.classList.add("canvas_outLine")
     }
-  
-  
+
+
   }
-  if(window.innerWidth < 1000){
-    c.canvas.width = 1000
-  }
-  if (window.innerHeight < 1700) {
-    c.canvas.height = 1700
-  }
+
   MAX_X_GAME = c.canvas.width
   MAX_Y_GAME = c.canvas.height
-  radio_user = MAX_X_GAME/MAX_Y_GAME
-  
-}
+  radio_user = MAX_X_GAME / MAX_Y_GAME
 
-function resetGame(){
+}
+function shotPlayer(angle) {
+  if(Math.random() < 0.3 && playerUpgrades.phaserBullet){
+    bulletsObject.push(new phser_bullet(imgs.router, MAX_X_GAME / 2, MAX_Y_GAME / 2, playerUpgrades.radiusBullet, playerUpgrades.speedBullet, angle))
+  }else{
+    bulletsObject.push(new bullet(imgs.router, MAX_X_GAME / 2, MAX_Y_GAME / 2, playerUpgrades.radiusBullet, playerUpgrades.speedBullet, angle))
+  }
+}
+function resetGame() {
   enemyObject = []
   bulletsObject = []
+  powerUpObject = []
+  playerUpgrades = {
+    speedBullet: 15,
+    radiusBullet: 20,
+    max_speedBullet: 40,
+    max_radiusBullet: 60,
+    phaserBullet: false
+  }
   points = 0
+  counterEnemy = 0
   round = 1
-  stat_dif = 1
+  stat_dif = 500
   spawTime = 2000
-  TimeOut_active= false
+  TimeOut_active = false
   atdead_particle = false
   animatior.animations.forEach((animation_) => {
     animation_.enable = false
@@ -73,17 +125,23 @@ let debug = false
 let points = 0
 let bulletsObject = []
 let particleObject = []
-let enemyObject = [ ]
+let enemyObject = []
+let powerUpObject = []
 let counterEnemy = 0
 let round = 1
-let stat_dif = 10
+let stat_dif = 500
 let spawTime = 2000
-let enemys = 0
 resize_canvas()
-let buffer_output_ratio = 1 
+let buffer_output_ratio = 1
 let bounding_rectangle = c.canvas.getBoundingClientRect();
 let player = new PlayerEntity(MAX_X_GAME / 2, MAX_Y_GAME / 2, imgs.anuke, 100, 60)
-
+let playerUpgrades = {
+  speedBullet: 15,
+  radiusBullet: 20,
+  max_speedBullet: 40,
+  max_radiusBullet:60,
+  phaserBullet: false
+}
 //by Skatnext
 // rand: devuelve un numero random entre el primer y el segudo parametro
 
@@ -98,26 +156,112 @@ function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function spawTnt() {
+  let x, y, angle
 
-function spawEnemy() {
-  let x, y, radiusEnemy, speed, angle
-  radiusEnemy = rand(40,60)
-
-  if (Math.random() < 0.5) {
-    x = Math.random() < 0.5 ? 0 - radiusEnemy : MAX_X_GAME + radiusEnemy
-    y = Math.random() * MAX_Y_GAME
+  if (Math.random() > 0.5) {
+    if (Math.random() < 0.5) {
+      y = Math.random() * MAX_Y_GAME
+      x = 0
+      angle = 360
+    } else {
+      y = Math.random() * MAX_Y_GAME
+      x = MAX_X_GAME
+      angle = 180
+    }
   } else {
-    y = Math.random() < 0.5 ? 0 - radiusEnemy : MAX_Y_GAME + radiusEnemy
-    x = Math.random() * MAX_X_GAME
-  }
+    if (Math.random() < 0.5) {
+      y = 0
+      x = Math.random() * MAX_X_GAME
+      angle = 90
 
-  angle = Math.atan2(MAX_Y_GAME / 2 - y, MAX_X_GAME / 2 - x) * 180 / Math.PI
-  speed = Math.floor(10 - radiusEnemy / 10) + rand(-2,2)
-  enemyObject.push(new enemy(imgs.juction, x, y, radiusEnemy, speed, angle, radiusEnemy * 2))
-  enemys++
+    } else {
+      y = MAX_Y_GAME
+      x = Math.random() * MAX_X_GAME
+      angle = 270
+
+
+    }
+  }
+  powerUpObject.push(new tnt_router(x, y, angle))
 }
 
+function spawEnemy() {
+  if (enemyObject.length <= 15) {
+    
+    let x, y, radiusEnemy, speed, angle
+    radiusEnemy = rand(40, 70)
+    
+    if (Math.random() < 0.5) {
+      x = Math.random() < 0.5 ? 0 - radiusEnemy : MAX_X_GAME + radiusEnemy
+      y = Math.random() * MAX_Y_GAME
+    } else {
+      y = Math.random() < 0.5 ? 0 - radiusEnemy : MAX_Y_GAME + radiusEnemy
+      x = Math.random() * MAX_X_GAME
+    }
 
+    angle = getAnglePlayer(x,y)
+    speed = Math.abs(Math.floor(10 - radiusEnemy / 10) + rand(-1, 1))
+    enemyObject.push(new enemy(imgs.juction, x, y, radiusEnemy, speed, angle))
+    
+  }
+}
+
+function spawBig_juction(){
+  if (enemyObject.length <= 15) {
+  
+    let x, y, radiusEnemy, speed, angle
+    radiusEnemy = rand(70, 80)
+  
+    if (Math.random() < 0.5) {
+      x = Math.random() < 0.5 ? 0 - radiusEnemy : MAX_X_GAME + radiusEnemy
+      y = Math.random() * MAX_Y_GAME
+    } else {
+      y = Math.random() < 0.5 ? 0 - radiusEnemy : MAX_Y_GAME + radiusEnemy
+      x = Math.random() * MAX_X_GAME
+    }
+  
+    angle = getAnglePlayer(x, y)
+    speed = Math.abs(Math.floor(10 - radiusEnemy / 10) + rand(-1, 1))
+    enemyObject.push(new frag_enemy(imgs.juction, x, y, radiusEnemy, speed, angle))
+  
+  }
+}
+
+function powerUp() {
+  if (powerUpObject.length < 2) {
+    let x, y, angle
+
+
+    if (Math.random() > 0.5) {
+      if (Math.random() < 0.5) {
+        y = Math.random() * MAX_Y_GAME
+        x = 0
+        angle = 360
+      } else {
+        y = Math.random() * MAX_Y_GAME
+        x = MAX_X_GAME
+        angle = 180
+      }
+    } else {
+      if (Math.random() < 0.5) {
+        y = 0
+        x = Math.random() * MAX_X_GAME
+        angle = 90
+    
+      } else {
+        y = MAX_Y_GAME
+        x = Math.random() * MAX_X_GAME
+        angle = 270
+    
+    
+      }
+    }
+
+    powerUpObject.push(new box_power_up(x, y, angle))
+  }
+
+}
 
 
 let interval_
@@ -125,15 +269,36 @@ let TimeOut
 let TimeOut_active = false
 let Interval = function() {
   interval_ = setInterval(() => {
-    spawEnemy()
+    setDificulty = true
+    let rand1
+    rand1 = Math.random()
+
+  if (rand1 > 0.9) powerUp()
+    //spawTnt()
+  spawEnemy()
+  if(Math.random() < 0.1) spawBig_juction()
   }, spawTime)
 }
 
 function removeObject(index, array = []) {
   array.splice(index, 1)
 }
-
+let setDificulty = true
 function game() {
+  if(points/50 > counterEnemy){
+    window.location.replace('https://youtu.be/dQw4w9WgXcQ')
+  }else if(points >= round * stat_dif && setDificulty){
+    setDificulty = false
+    if(spawTime > 1000){
+    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "More dificulty"))
+    clearInterval(interval_)
+    spawTime -= 50
+    stat_dif =  Math.floor(stat_dif * 1.4)
+    ++round
+    Interval()
+//    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3, 100, 1, 270, "" + spawTime + "-" + interval_ + "--" + round * stat_dif))
+    }
+  }
   bulletsObject.forEach((bullet, indexBullet) => {
     bullet.update()
 
@@ -150,6 +315,40 @@ function game() {
     if (bullet.y + bullet.radius < 0) {
       removeObject(indexBullet, bulletsObject)
     }
+
+    if (bullet.timeLife != null) {
+      if (bullet.timeLife <= 0) {
+
+        removeObject(indexBullet, bulletsObject)
+
+      }
+    }
+  })
+
+  powerUpObject.forEach((powerUp, indexPower) => {
+    powerUp.update()
+
+    if (powerUp.x - powerUp.radius > MAX_X_GAME) {
+      removeObject(indexPower, powerUpObject)
+    }
+    if (powerUp.x + powerUp.radius < 0) {
+      removeObject(indexPower, powerUpObject)
+    }
+
+    if (powerUp.y - powerUp.radius > MAX_Y_GAME) {
+      removeObject(indexPower, powerUpObject)
+    }
+    if (powerUp.y + powerUp.radius < 0) {
+      removeObject(indexPower, powerUpObject)
+    }
+
+    bulletsObject.forEach((bullet_, index_bullet) => {
+      const dist = Math.hypot(bullet_.x - powerUp.x, bullet_.y - powerUp.y)
+
+      if (dist - powerUp.radius - powerUp.radius < 1) {
+        bullet_.hit(index_bullet, powerUp, indexPower)
+      }
+    })
   })
   enemyObject.forEach((enemy, index_enemy) => {
     enemy.update()
@@ -169,32 +368,34 @@ function game() {
     })
   })
 
-  
-  if(player.dead){
-      Sound_source_.playSound("dead",1)
-        clearInterval(interval_)
-        UIConfig_.UIS[1].enable = false
-        enemyObject.forEach((enemy, index) => {
-          enemy.hit(index)
-        })
-        
-        particleObject.push(new particle(player.img,player.x,player.y,Math.random() * player.radius,Math.random() * 10,Math.random() * 360))
 
-       TimeOut =  setTimeout(() => {
-         
-          star_game = false
-          TimeOut_active = true
-          player.unDraw  = true
-          animatior.animations[2].enable = true
-        },3000)
-        
-        if(TimeOut_active){
-          clearTimeout(TimeOut)
-          
-        }
+  if (player.dead) {
+    Sound_source_.playSound("dead", 2)
+    clearInterval(interval_)
+    UIConfig_.UIS[1].enable = false
+    killAllEnemys()
+    bulletsObject = []
+    powerUpObject = []
+    enemyObject = []
+    particleObject.push(new particle(player.img, player.x, player.y, Math.random() * player.radius, Math.random() * 10, Math.random() * 360))
+
+    TimeOut = setTimeout(() => {
+
+      star_game = false
+      TimeOut_active = true
+      player.unDraw = true
+      animatior.animations[2].enable = true
+
+    }, 3000)
+
+    if (TimeOut_active) {
+      clearTimeout(TimeOut)
+
+    }
   }
 }
 let atdead_particle = false
+
 function animation() {
   requestAnimationFrame(animation)
 
@@ -208,11 +409,11 @@ function animation() {
       particle.update()
     }
   })
-  
-  
+
+
   if (star_game) {
     game()
-  } else if(!player.dead && !star_game){
+  } else if (!player.dead && !star_game) {
     if (!animatior.animations[0].enable && !animatior.animations[0].finish) animatior.animations[0].enable = true
     if (animatior.animations[0].finish && !animatior.animations[1].finish) animatior.animations[1].enable = true
     if (animatior.animations[0].finish && animatior.animations[1].finish) {
@@ -221,16 +422,16 @@ function animation() {
       Interval()
     }
   }
-  if(!player.unDraw){
-  player.update()
-  }else{
-    if(!atdead_particle){
-    for(let i = 0; i < 20;i++){
-      particleObject.push(new particle(player.img,player.x,player.y,Math.random() * player.radius,Math.random() * 10,Math.random() * 360))
-      
-    }
-    atdead_particle = true
-    
+  if (!player.unDraw) {
+    player.update()
+  } else {
+    if (!atdead_particle) {
+      for (let i = 0; i < 20; i++) {
+        particleObject.push(new particle(player.img, player.x, player.y, Math.random() * player.radius, Math.random() * 10, Math.random() * 360))
+
+      }
+      atdead_particle = true
+
     }
     if (animatior.animations[2].finish && !animatior.animations[2].enable) {
       animatior.animations[3].enable = true
@@ -248,19 +449,18 @@ window.onload = () => {
 c.canvas.addEventListener("click", (event) => {
   event.preventDefault()
   if (star_game && !player.dead) {
-    let angle = Math.atan2(event.clientY -  innerHeight / 2, event.clientX - innerWidth/ 2) * 180 / Math.PI;
+    let angle = Math.atan2(event.clientY - innerHeight / 2, event.clientX - innerWidth / 2) * 180 / Math.PI;
+    shotPlayer(angle)
     
-    bulletsObject.push(new bullet(imgs.router, MAX_X_GAME / 2, MAX_Y_GAME / 2, 10, 15, angle, 30))
-    Sound_source_.playSound("shot",1)
-  } else if(!star_game){
+    Sound_source_.playSound("shot", 1)
+  } else if (!star_game) {
     animatior.animations[0].finish = true
   }
-  if(player.dead && player.unDraw ){
+  if (player.dead && player.unDraw) {
     animatior.animations[2].finish = true
-  } 
-  if (player.dead && player.unDraw &&animatior.animations[2].finish && animatior.animations[3].enable) {
+  }
+  if (player.dead && player.unDraw && animatior.animations[2].finish && animatior.animations[3].enable) {
     resetGame()
   }
-  
-})
 
+})
