@@ -120,13 +120,13 @@ class frag_enemy extends enemy{
   }
 }
 class box_power_up {
-  constructor(x, y, angle) {
+  constructor(x, y, angle, radius, speed) {
     this.img = imgs.router_big
     this.x = x
     this.y = y
-    this.radius = 80* radio_user
-    this.widthImg = (80 * 2) * radio_user
-    this.speed = 4
+    this.radius = radius * radio_user
+    this.widthImg = (radius * 2) * radio_user
+    this.speed = speed
     this.angle = angle
   }
   hitBox() {
@@ -161,13 +161,13 @@ class box_power_up {
 }
 
 class tnt_router {
-  constructor(x, y, angle) {
+  constructor(x, y, angle,radius,speed) {
     this.img = imgs.tnt_router
     this.x = x
     this.y = y
-    this.radius = 80 * radio_user
-    this.widthImg = (80 * 2) * radio_user
-    this.speed = 3
+    this.radius =  radius * radio_user
+    this.widthImg = (radius * 2) * radio_user
+    this.speed = speed
     this.angle = angle
   }
   hitBox() {
