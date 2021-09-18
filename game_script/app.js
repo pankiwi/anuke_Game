@@ -214,7 +214,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 let MAX_X_GAME = c.canvas.width;
 let MAX_Y_GAME = c.canvas.height;
 //viewport radius
-let radio_user = c.canvas.width / c.canvas.height;
+let radio_user = 1
 let canvas_viewport = c.canvas.getBoundingClientRect();
 //star game :/
 
