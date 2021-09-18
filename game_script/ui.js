@@ -11,7 +11,7 @@ UIConfig_.UIS.push(new ScreenUI_(false, () => {
 //guidescreend
 UIConfig_.UIS.push(new ScreenUI_(false, () => {
   drawTxt(c, c.canvas.width / 2, c.canvas.height / 3, 1000, 300, "black", "Anuke Game", "center", 1);
-  drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.5, 600, 120, "black", "V1.5.1", "center", 1);
+  drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.5, 600, 120, "black", "V1.6", "center", 1);
 }));
 UIConfig_.UIS.push(new ScreenUI_(false, () => {
   drawTxt(c, c.canvas.width / 2, c.canvas.height / 2.5, 600, 120, "black", "he is anuke", "center", 1);
