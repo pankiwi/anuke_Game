@@ -1,4 +1,3 @@
-
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -28,7 +27,13 @@ function shotPlayer(angle) {
     bulletsObject.push(new bullet(imgs.router, MAX_X_GAME / 2, MAX_Y_GAME / 2, playerUpgrades.radiusBullet, playerUpgrades.speedBullet, angle));
   }
 }
-
+function atParticleRandom(x,y,img,minRadius,maxRadius,minSpeed,maxSpeed,amount){
+  if(particleObject.length < 1000){
+    for(let i = 0; i < amount;i++){
+    particleObject.push( new particle(img,x,y,rand(minRadius,maxRadius),rand(minSpeed,maxSpeed),Math.random() * 360));
+    }
+  }
+}
 /*
  * Entitys fuction
  */
@@ -198,27 +203,28 @@ function resetGame() {
     ui_.enable = false;
   });
   player = new PlayerEntity(MAX_X_GAME / 2, MAX_Y_GAME / 2, imgs.anuke, 100, 60);
+  animatior.animations[0].finish = true
 }
-
-const c = document.querySelector("canvas").getContext("2d");
+/* canvas */
+const out = document.querySelector("canvas").getContext("2d");
+/* draw */
+const c = document.createElement("canvas").getContext("2d");
 //set Size
-
+out.canvas.width = innerWidth
+out.canvas.height = innerHeight
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   c.canvas.width = innerWidth < 1000 ? 1000 : innerWidth;
-  c.canvas.height = innerHeight < 1000 ? 1500 : innerHeight;
-  
-}else{
+  c.canvas.height = innerHeight < 1600 ? 1600 : innerHeight;
+
+} else {
   c.canvas.width = innerWidth;
   c.canvas.height = innerHeight;
-  
+
 }
-let radio_user = innerWidth / c.canvas.width;
+let radio_user = out.canvas.width / c.canvas.width;
 //set stat window
 let MAX_X_GAME = c.canvas.width;
 let MAX_Y_GAME = c.canvas.height;
-//viewport radius
-
-let canvas_viewport = c.canvas.getBoundingClientRect();
 //star game :/
 
 let star_game = false;
@@ -243,7 +249,7 @@ let spawTime = 2000;
 let chace_power_up = 5;
 
 /* player */
-let player = new PlayerEntity(MAX_X_GAME / 2, MAX_Y_GAME / 2, imgs.anuke, 100, 60);
+let player = new PlayerEntity(MAX_X_GAME / 2, MAX_Y_GAME / 2, imgs.anuke,80);
 /*player upgrades */
 let playerUpgrades = {
   speedBullet: 15,
@@ -256,20 +262,20 @@ let playerUpgrades = {
 /* power ups */
 let power_ups = [
   superShotRouter = () => {
-    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "super router shot"))
+    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 300, 1, 270, "super router shot"))
     Sound_source_.playRandomSound("effect_item_use")
     for (var i = 0; i < 20; i++) {
       bulletsObject.push(new bullet(imgs.router, MAX_X_GAME / 2, MAX_Y_GAME / 2, 40, 5, 18 * i, 80))
     }
   },
   shildAnuke = () => {
-    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "anuke Hull"))
+    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 300, 1, 270, "anuke Hull"))
     Sound_source_.playRandomSound("effect_item_use")
     player.shild = true
   },
   rainTnt = () => {
     let tnts = rand(2, 4)
-    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "Rain Tnt"))
+    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 300, 1, 270, "Rain Tnt"))
     Sound_source_.playRandomSound("effect_item_use")
 
     for (var i = 0; i < tnts; i++) {
@@ -278,7 +284,7 @@ let power_ups = [
   },
   frozenEnemy = () => {
     if (Math.random() < 0.04) {
-      particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "¿ Jojo reference ?"))
+      particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 300, 1, 270, "¿ Jojo reference ?"))
       Sound_source_.playSound("dio", 0)
     } else {
       particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "Frozen Enemys"))
@@ -290,7 +296,7 @@ let power_ups = [
     })
   },
   MoreSpeedBullet = () => {
-    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "Super Speed Bullet"))
+    particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 300, 1, 270, "Super Speed Bullet"))
     Sound_source_.playRandomSound("effect_item_use")
     playerUpgrades.speedBullet = playerUpgrades.speedBullet != playerUpgrades.max_speedBullet ? playerUpgrades.speedBullet + 5 : playerUpgrades.speedBullet
   }
@@ -324,20 +330,20 @@ function game() {
   } else if (points >= round * stat_dif) {
     if (spawTime > 800) {
       clearInterval(interval_);
-      particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 100, 1, 270, "More Enemys"));
-      
+      particleObject.push(new particle_txt(MAX_X_GAME / 2, MAX_Y_GAME / 3.6, 300, 1, 270, "More Enemys"));
+
       Sound_source_.playSound("next_round", 0);
-     
+
       spawTime -= 50;
       stat_dif = Math.floor(stat_dif * 1.5);
 
-      chace_power_up = chace_power_up * 1.2> 10 ? 10 : chace_power_up * 1.0;
-      
-        ++round;
+      chace_power_up = chace_power_up * 1.2 > 10 ? 10 : chace_power_up * 1.0;
+
+      ++round;
       Interval();
     }
   }
-  
+
   /* updage object */
   bulletsObject.forEach((bullet, indexBullet) => {
     bullet.update();
@@ -362,6 +368,24 @@ function game() {
 
       };
     };
+    if (enemyObject.length > 0) {
+      enemyObject.forEach((enemy, index_enemy) => {
+        const dist = Math.hypot(enemy.x - bullet.x, enemy.y - bullet.y);
+
+        if (dist - enemy.radius - bullet.radius < 1) {
+          bullet.hit(indexBullet, enemy, index_enemy);
+        };
+      });
+    };
+    if (powerUpObject.length > 0) {
+      powerUpObject.forEach((power, indexPower) => {
+        const dist = Math.hypot(power.x - bullet.x, power.y - bullet.y);
+
+        if (dist - power.radius - bullet.radius < 1) {
+          bullet.hit(indexBullet, power, indexPower)
+        };
+      });
+    };
   })
 
   powerUpObject.forEach((powerUp, indexPower) => {
@@ -380,7 +404,7 @@ function game() {
       removeObject(indexPower, powerUpObject);
     };
   });
-  
+
   enemyObject.forEach((enemy, index_enemy) => {
     enemy.update();
     const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y);
@@ -389,92 +413,87 @@ function game() {
       player.hit();
 
     };
-  })
+  });
 
-
+  //animation dead
   if (player.dead) {
-    Sound_source_.playSound("dead", 2)
-    clearInterval(interval_)
-    UIConfig_.UIS[1].enable = false
-    killAllEnemys()
-    bulletsObject = []
-    powerUpObject = []
-    enemyObject = []
-    particleObject.push(new particle(player.img, player.x, player.y, Math.random() * player.radius, Math.random() * 10, Math.random() * 360))
-
+    Sound_source_.playSound("dead", 2);
+    clearInterval(interval_);
+    UIConfig_.UIS[1].enable = false;
+    killAllEnemys();
+    bulletsObject = [];
+    powerUpObject = [];
+    enemyObject = [];
+    atParticleRandom(player.x,player.y,player.img,10,30,1,15,1);
     TimeOut = setTimeout(() => {
-
-      star_game = false
-      TimeOut_active = true
-      player.unDraw = true
-      animatior.animations[2].enable = true
-
-    }, 3000)
-
+      star_game = false;
+      TimeOut_active = true;
+      player.unDraw = true;
+      animatior.animations[2].enable = true;
+    }, 3000);
     if (TimeOut_active) {
-      clearTimeout(TimeOut)
-
-    }
-  }
-}
+      clearTimeout(TimeOut);
+    };
+  };
+};
 let atdead_particle = false
 
 function animation() {
   requestAnimationFrame(animation)
 
   /*clear*/
-  c.fillStyle = "rgba(255,255,255,0.3)"
-  c.fillRect(0, 0, c.canvas.width, c.canvas.height)
+  c.fillStyle = "rgba(255,255,255,0.3)";
+  c.fillRect(0, 0, c.canvas.width, c.canvas.height);
   particleObject.forEach((particle, index_particle) => {
     if (particle.alfa <= 0) {
-      removeObject(index_particle, particleObject)
+      removeObject(index_particle, particleObject);
     } else {
-      particle.update()
-    }
-  })
+      particle.update();
+    };
+  });
 
-
+//start game evwnt
   if (star_game) {
-    game()
+    game();
   } else if (!player.dead && !star_game) {
-    if (!animatior.animations[0].enable && !animatior.animations[0].finish) animatior.animations[0].enable = true
-    if (animatior.animations[0].finish && !animatior.animations[1].finish) animatior.animations[1].enable = true
+    if (!animatior.animations[0].enable && !animatior.animations[0].finish) animatior.animations[0].enable = true;
+    if (animatior.animations[0].finish && !animatior.animations[1].finish) animatior.animations[1].enable = true;
     if (animatior.animations[0].finish && animatior.animations[1].finish) {
-      star_game = true
-      UIConfig_.UIS[1].enable = true
-      Interval()
-    }
-  }
+      star_game = true;
+      UIConfig_.UIS[1].enable = true;
+      Interval();
+    };
+  };
+  //evente dead player
   if (!player.unDraw) {
-    player.update()
+    player.update();
   } else {
     if (!atdead_particle) {
-      for (let i = 0; i < 20; i++) {
-        particleObject.push(new particle(player.img, player.x, player.y, Math.random() * player.radius, Math.random() * 10, Math.random() * 360))
-
-      }
-      atdead_particle = true
-
-    }
+      atParticleRandom(player.x,player.y,player.img,10,30,1,15,20);
+      atdead_particle = true;
+    };
     if (animatior.animations[2].finish && !animatior.animations[2].enable) {
-      animatior.animations[3].enable = true
-      UIConfig_.UIS[15].enable = true
-    }
-  }
-  UIConfig_.drawAllUI()
-  animatior.drawAllAnimation()
-}
+      animatior.animations[3].enable = true;
+      UIConfig_.UIS[19].enable = true;
+    };
+  };
+  
+  UIConfig_.drawAllUI();
+  animatior.drawAllAnimation();
+  //draw game
+  out.drawImage(c.canvas, 0, 0, c.canvas.width, c.canvas.height, 0, 0, out.canvas.width, out.canvas.height);
+};
 
 window.onload = () => {
   animation();
-}
+};
 
-c.canvas.addEventListener("click", (event) => {
+out.canvas.addEventListener("click", (event) => {
   event.preventDefault()
   if (star_game && !player.dead) {
-    let angle = Math.atan2(event.clientY - c.canvas.height / 2, event.clientX - c.canvas.width / 2) * 180 / Math.PI;
+    let angle = Math.atan2(event.clientY - out.canvas.height / 2, event.clientX - out.canvas.width / 2) * 180 / Math.PI;
     shotPlayer(angle)
-
+    
     Sound_source_.playSound("shot", 1)
   } else if (!star_game) {
     animatior.animations[0].finish = true

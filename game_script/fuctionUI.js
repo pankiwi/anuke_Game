@@ -230,17 +230,17 @@ function drawButton(c, button) {
 function drawTxt(c, x, y, width, widthTxt, color, txt, pos, alfa) {
   c.save()
   c.fillStyle = color;
-  c.font = widthTxt * radio_user + "px bit";
+  c.font = (widthTxt * radio_user) + "px bit";
   c.globalAlpha = alfa
   c.textAlign = pos
-  c.fillText(txt, x, y, width * radio_user);
+  c.fillText(txt, x, y, (width * radio_user));
   c.restore()
 }
 
 function drawTxtChaceWidth(c, x, y, width, widthTxt, color, txt = "", pos, alfa) {
   c.save()
   c.fillStyle = color;
-  c.font = (widthTxt * radio_user)+ "px bit";
+  c.font = (widthTxt * radio_user) + "px bit";
   c.globalAlpha = alfa
   c.textAlign = pos
   c.fillText(txt, x, y, width * radio_user *txt.length );
