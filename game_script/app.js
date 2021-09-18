@@ -202,19 +202,22 @@ function resetGame() {
 
 const c = document.querySelector("canvas").getContext("2d");
 //set Size
+let radio_user 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   c.canvas.width = innerWidth < 1000 ? 1000 : innerWidth;
   c.canvas.height = innerHeight < 1000 ? 1500 : innerHeight;
+  radio_user = c.canvas.width/c.canvas.height
 }else{
   c.canvas.width = innerWidth
   c.canvas.height = innerHeight
+  radio_user = c.canvas.height/c.canvas.width
 }
 
 //set stat window
 let MAX_X_GAME = c.canvas.width;
 let MAX_Y_GAME = c.canvas.height;
 //viewport radius
-let radio_user = 1
+
 let canvas_viewport = c.canvas.getBoundingClientRect();
 //star game :/
 
