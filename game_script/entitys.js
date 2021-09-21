@@ -63,7 +63,7 @@ class enemy {
     c.drawImage(this.img, 0, 0, this.img.naturalWidth, this.img.naturalHeight, this.x - this.widthImg / 2, this.y - this.widthImg / 2, this.widthImg, this.widthImg);
   };
   updateBullet() {
-    if (!this.static > 0) {
+    if (!this.static > 0 || !pause_game) {
       this.x += Math.cos(this.angle) * this.speed;
       this.y += Math.sin(this.angle) * this.speed;
     } else {
@@ -125,8 +125,10 @@ class box_power_up {
     c.drawImage(this.img, 0, 0, this.img.naturalWidth, this.img.naturalHeight, this.x - this.widthImg / 2, this.y - this.widthImg / 2, this.widthImg, this.widthImg);
   };
   updateBullet() {
+    if(!pause_game){
     this.x += Math.cos(this.angle) * this.speed;
     this.y += Math.sin(this.angle) * this.speed;
+    }
   };
   update() {
     this.updateBullet();
@@ -163,8 +165,10 @@ class tnt_router {
     c.drawImage(this.img, 0, 0, this.img.naturalWidth, this.img.naturalHeight, this.x - this.widthImg / 2, this.y - this.widthImg / 2, this.widthImg, this.widthImg);
   };
   updateBullet() {
+    if(!pause_game){
     this.x += Math.cos(this.angle) * this.speed;
     this.y += Math.sin(this.angle) * this.speed;
+    }
   };
   update() {
     this.updateBullet();
@@ -202,9 +206,11 @@ class particle {
     c.restore();
   };
   updateBullet() {
+    if(!pause_game){
     this.x += Math.cos(this.angle) * this.speed;
     this.y += Math.sin(this.angle) * this.speed;
     this.alfa = this.alfa - 0.03 > 0 ? this.alfa - 0.03 : 0;
+    }
   };
   update() {
     this.updateBullet();

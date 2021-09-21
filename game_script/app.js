@@ -226,7 +226,7 @@ let radio_user = out.canvas.width / c.canvas.width;
 let MAX_X_GAME = c.canvas.width;
 let MAX_Y_GAME = c.canvas.height;
 //star game :/
-
+let pause_game = false
 let star_game = false;
 let debug = false;
 //object
@@ -490,7 +490,7 @@ window.onload = () => {
 
 out.canvas.addEventListener("click", (event) => {
   event.preventDefault()
-  if (star_game && !player.dead) {
+  if (star_game && !pause_game && !player.dead) {
     let angle = Math.atan2(event.clientY - out.canvas.height / 2, event.clientX - out.canvas.width / 2) * 180 / Math.PI;
     shotPlayer(angle)
     
@@ -505,4 +505,12 @@ out.canvas.addEventListener("click", (event) => {
     resetGame()
   }
 
+})
+//pause
+window.addEventListener("pagehide", () => {
+  pause_game = true
+})
+
+window.addEventListener("pageshow", () => {
+  pause_game = false
 })
