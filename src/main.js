@@ -104,4 +104,4 @@ function mainLoop(timestamp) {
   frameID = requestAnimationFrame(mainLoop);
 }
 
-window.onload = start;
+start();
