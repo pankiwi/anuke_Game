@@ -29,3 +29,5 @@ export default class GameObject {
     };
   };
 };
+
+global.loggerScript('GameObject')

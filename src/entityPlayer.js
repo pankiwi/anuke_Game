@@ -1,3 +1,5 @@
+import {global} from './global.js';
+
 import {default as Entity} from './entity.js';
 
 export default class EntityPlayer extends Entity {
@@ -6,3 +8,5 @@ export default class EntityPlayer extends Entity {
     this.type = "player";
   };
 };
+
+global.loggerScript('EntityPlayer')

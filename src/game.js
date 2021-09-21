@@ -1,5 +1,5 @@
 /**modules**/
-import {global} from './global.js'
+import {global} from './global.js';
 
 import {default as SpriteSheet} from './draw.js';
 import {getAngle} from './mathFs.js';
@@ -47,3 +47,5 @@ export default class GameMain{
     
   };
 };
+
+global.loggerScript('game')

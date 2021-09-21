@@ -1,5 +1,6 @@
 /** module **/
-import { global } from './global.js';
+import {global} from './global.js';
+
 import { default as GameMain } from './game.js';
 import { GetUserDrive, ReziseCanvas } from './viewport.js';
 import { default as SpriteSheet, RenderCanvas } from './draw.js';
@@ -105,3 +106,6 @@ function mainLoop(timestamp) {
 }
 
 window.onload = start();
+
+global.loggerScript('main')
+

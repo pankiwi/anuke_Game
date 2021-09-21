@@ -1,4 +1,6 @@
 /* require */
+import {global} from './global.js';
+
 import {default as GameObject} from './gameObject.js';
 
 import {DrawImage, DrawCircle} from './draw.js';
@@ -15,3 +17,5 @@ export default class Entity extends GameObject{
     DrawImage(ctx, this.img, this.x, this.y, this.alfa, this.size);
   };
 };
+
+global.loggerScript('Entity')

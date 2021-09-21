@@ -1,4 +1,4 @@
-
+import {global} from './global.js';
 /* load imgs */
 export default class SpriteSheet {
   sprite = {};
@@ -41,3 +41,5 @@ export function drawTxtChaceWidth(ctx, x, y, width, widthTxt, color, txt = "", p
   ctx.fillText(txt, x, y, width * txt.length);
   ctx.restore();
 };
+
+global.loggerScript('draw');

@@ -1,3 +1,5 @@
+import {global} from './global.js'
+
 export function GetUserDrive() {
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     return true;
@@ -26,4 +28,4 @@ export function ReziseCanvas(UserDriveIsMobil, canvas) {
   return size;
 }
 
- 
+global.loggerScript('viewpor')
