@@ -1,6 +1,6 @@
-import {global} from './global.js';
 /* load and play sound */
-export  function PlaySound(src, volume) {
+export let sound = {
+  PlaySound: function(src, volume) {
   let sound = document.createElement("audio");
   sound.src = src;
   sound.volume = volume / 100;
@@ -8,9 +8,8 @@ export  function PlaySound(src, volume) {
   sound.setAttribute("controls", "none");
   sound.style.display = "none";
   sound.play();
-};
-
-export  function PlaySoundRandom(srcs = [], volume = 1) {
+},
+  PlaySoundRandom: function(srcs = [], volume = 1) {
   let src = srcs[Math.floor(Math.random() * srcs.length)]
   let sound = document.createElement("audio");
    sound.src = src;
@@ -19,6 +18,5 @@ export  function PlaySoundRandom(srcs = [], volume = 1) {
    sound.setAttribute("controls", "none");
    sound.style.display = "none";
    sound.play();
-};
-
-global.loggerScript('sound')
+}
+}

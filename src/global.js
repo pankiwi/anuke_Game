@@ -5,7 +5,6 @@ export  let global = {
   /* add object */
   addObjectGame: function(object){
     this.ObjectGame.push(object);
-    if(this.debuger) console.table(object)
   },
   /* remove object */
   removeObjectGame: function(){
@@ -18,11 +17,7 @@ export  let global = {
   },
   
   findObjectCallback: function(type, callback = function(object,indexObject,array){}){
-    this.FindObject(type).map(callback);
-  },
-  loggerScript: function(script){
-     if(this.debuger)console.log(script)
+    this.findObject(type).map(callback);
   }
 };
 
-global.loggerScript('global')

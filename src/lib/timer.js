@@ -1,4 +1,4 @@
-import {global} from './global.js';
+
 /** by Alain Galvan **/
 
 export default class Timer {
@@ -47,4 +47,3 @@ export default class Timer {
   }
 
 }
-global.loggerScript('timer')

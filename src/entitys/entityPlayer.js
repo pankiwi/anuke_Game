@@ -1,4 +1,4 @@
-import {global} from './global.js';
+import { global } from '../global.js';
 
 import {default as Entity} from './entity.js';
 
@@ -9,4 +9,6 @@ export default class EntityPlayer extends Entity {
   };
 };
 
-global.loggerScript('EntityPlayer')
+export function SpawPlayer(x, y, size, img){
+  global.addObjectGame( new EntityPlayer(x, y, size, img));
+};
