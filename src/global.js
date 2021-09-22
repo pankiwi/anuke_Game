@@ -1,7 +1,7 @@
 export  let global = {
   ObjectGame: [],
   WindowRadius: 1,
-  debuger: false,
+  debuger: true,
   /* add object */
   addObjectGame: function(object){
     this.ObjectGame.push(object);
