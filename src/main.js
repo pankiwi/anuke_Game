@@ -4,7 +4,7 @@ import { Viewport } from './lib/viewport.js';
 
 import { Draw } from './lib/draw.js';
 
-import {default as GameMain } from './game.js';
+import { default as GameMain } from './game.js';
 
 
 
@@ -23,22 +23,24 @@ c.canvas.height = Viewport.ReziseCanvas(ClientDriveMobil, c.canvas).y;
 
 global.WindowRadius = out.canvas.width / c.canvas.width;
 
-const anukeGame = new GameMain(ClientDriveMobil,c,out)
+const anukeGame = new GameMain(ClientDriveMobil, c, out)
 
 anukeGame.Init();
 
 
 function gameLoop() {
   requestAnimationFrame(gameLoop)
+  Draw.RenderCanvas(out, c);
+  
+  c.fillStyle = 'rgba(255,255,255,1)';
+  c.fillRect(0,0,c.canvas.width,c.canvas.height);
+
   anukeGame.DrawGame();
-  
+
   anukeGame.UpdateGame();
-  
-  
-  Draw.RenderCanvas(out,c)
+
+
+
 }
 
-window.onload = gameLoop();
-
-console.log(
-global.WindowRadius)
+window.onload = gameLoop;

@@ -1,4 +1,7 @@
-import { MathFs } from './mathFs.js'
+import { global } from '../../global.js';
+
+import { MathFs } from '../../lib/mathFs.js'
+
 import { default as Entity } from '../entity.js';
 /** basic bullet **/
 export default class Bullet extends Entity {
