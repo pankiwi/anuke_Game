@@ -2,7 +2,7 @@ import { global } from './global.js';
 
 import { Viewport } from './lib/viewport.js';
 
-import { Draw } from './lib/draw.js';
+import {default as SpriteSheet, Draw } from './lib/draw.js';
 
 import { default as GameMain } from './game.js';
 
@@ -23,9 +23,14 @@ c.canvas.height = Viewport.ReziseCanvas(ClientDriveMobil, c.canvas).y;
 
 global.WindowRadius = out.canvas.width / c.canvas.width;
 
-const anukeGame = new GameMain(ClientDriveMobil, c, out)
+const sprites = new SpriteSheet();
+
+sprites.loadSprite("anuke",'../assets/sprites/anuke.png')
+
+const anukeGame = new GameMain(ClientDriveMobil, c, out, sprites);
 
 anukeGame.Init();
+
 
 
 function gameLoop() {
@@ -34,13 +39,10 @@ function gameLoop() {
   
   c.fillStyle = 'rgba(255,255,255,1)';
   c.fillRect(0,0,c.canvas.width,c.canvas.height);
-
-  anukeGame.DrawGame();
-
+  
   anukeGame.UpdateGame();
 
-
-
+  anukeGame.DrawGame();
 }
 
-window.onload = gameLoop;
+window.onload = gameLoop
