@@ -1,7 +1,7 @@
 
 /** by Alain Galvan **/
 
-export default class Timer {
+class Timer {
   // Adds a timer with a given start time.
   addTimer(key, time = 1) {
     Object.defineProperty(this, key, {

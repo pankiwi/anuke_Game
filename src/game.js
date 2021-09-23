@@ -1,17 +1,4 @@
-/**modules**/
-import { global } from './global.js';
-
-import { MathFs } from './lib/mathFs.js';
-
-import { Draw } from './lib/draw.js';
-
-import { default as SpriteSheet } from './lib/draw.js';
-
-import { default as EntityPlayer, SpawPlayer } from './entitys/entityPlayer.js';
-
-import { default as Bullet, SpawBullet } from './entitys/bullet/bullet.js';
-
-export default class GameMain {
+class GameMain {
   constructor(clientHasMobil, ctx = new CanvasRenderingContext2D, out, sprites = new SpriteSheet()) {
     this.gameHeight = ctx.canvas.height;
     this.gameWidth = ctx.canvas.width;
@@ -26,7 +13,7 @@ export default class GameMain {
     /** add event **/
     this.out.canvas.addEventListener('click', (event) => {
       let angle = MathFs.getAngle(event.clientX, this.out.canvas.width / 2, event.clientY, this.out.canvas.height / 2);
-      global.addObjectGame(new Bullet(global.ObjectGame[0].x, global.ObjectGame[0].y, 100, this.spriteSource.findSprite('anuke'), 10, angle));
+      global.addObjectGame(new Bullet(global.ObjectGame[0].x, global.ObjectGame[0].y, 100, this.spriteSource.findSprite('router'), 10, angle));
     });
   };
   DrawGame() {
@@ -46,4 +33,5 @@ export default class GameMain {
       //  console.log(object)
     });
   };
+  
 };

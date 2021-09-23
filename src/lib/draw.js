@@ -1,5 +1,5 @@
 /* load imgs */
-export default class SpriteSheet {
+class SpriteSheet {
   constructor(none) {};
   loadSprite(nameTarget, src) {
     Object.defineProperty(this, nameTarget, {
@@ -24,7 +24,7 @@ export default class SpriteSheet {
   };
 };
 
-export let Draw = {
+let Draw = {
   DrawImage: function(ctx, img, x, y, alfa, size) {
     ctx.save();
     ctx.globalAlfa = alfa;

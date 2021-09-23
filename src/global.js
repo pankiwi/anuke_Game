@@ -1,7 +1,8 @@
-export  let global = {
+/** global **/
+let global = {
   ObjectGame: [],
   WindowRadius: 1,
-  debuger: true,
+  debuger: false,
   /* add object */
   addObjectGame: function(object){
     this.ObjectGame.push(object);

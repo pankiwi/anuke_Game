@@ -1,10 +1,5 @@
-import { global } from '../../global.js';
-
-import { MathFs } from '../../lib/mathFs.js'
-
-import { default as Entity } from '../entity.js';
 /** basic bullet **/
-export default class Bullet extends Entity {
+class Bullet extends Entity {
   constructor(x, y, size, img, speed, angle) {
     super(x, y, size, img);
     this.speed = speed;
@@ -34,6 +29,6 @@ export default class Bullet extends Entity {
 
 };
 
-export function SpawBullet(x = 0, y = 0, size, sprite, speed, angle) {
+function SpawBullet(x = 0, y = 0, size, sprite, speed, angle) {
   global.addObjectGame(new Bullet(x, y, size, sprite, speed, angle));
 }

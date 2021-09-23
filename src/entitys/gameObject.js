@@ -1,7 +1,4 @@
-import { global } from '../global.js';
-import { Draw } from '../lib/draw.js';
-
-export default class GameObject {
+class GameObject {
   removeObject = false
   constructor(x, y, size) {
     this.x = x;

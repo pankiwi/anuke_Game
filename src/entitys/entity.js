@@ -1,10 +1,4 @@
-/* require */
-
-import {default as GameObject} from './gameObject.js';
-
-import {Draw} from '../lib/draw.js';
-
-export default class Entity extends GameObject{
+class Entity extends GameObject{
   constructor(x, y, size, img){
     super( x, y, size);
     this.img = img;

@@ -1,5 +1,5 @@
 /** math functions **/
-export let MathFs = {
+let MathFs = {
  getAngle: function(x1, x2, y1, y2) {
     return Math.atan2(y1 - y2, x1 - x2) * 180 / Math.PI;
   },

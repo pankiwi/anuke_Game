@@ -1,5 +1,5 @@
 /* load and play sound */
-export let sound = {
+let sound = {
   PlaySound: function(src, volume) {
   let sound = document.createElement("audio");
   sound.src = src;

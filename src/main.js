@@ -1,12 +1,3 @@
-import { global } from './global.js';
-
-import { Viewport } from './lib/viewport.js';
-
-import {default as SpriteSheet, Draw } from './lib/draw.js';
-
-import { default as GameMain } from './game.js';
-
-
 
 const ClientDriveMobil = Viewport.GetUserDrive();
 /* scrend html */
@@ -26,13 +17,16 @@ global.WindowRadius = out.canvas.width / c.canvas.width;
 const sprites = new SpriteSheet();
 
 sprites.loadSprite("anuke",'../assets/sprites/anuke.png')
+sprites.loadSprite("router",'../assets/sprites/router.png')
 
 const anukeGame = new GameMain(ClientDriveMobil, c, out, sprites);
+
+/** init **/
 
 anukeGame.Init();
 
 
-
+/** game loop **/
 function gameLoop() {
   requestAnimationFrame(gameLoop)
   Draw.RenderCanvas(out, c);
