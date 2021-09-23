@@ -14,10 +14,12 @@ c.canvas.height = Viewport.ReziseCanvas(ClientDriveMobil, c.canvas).y;
 
 global.WindowRadius = out.canvas.width / c.canvas.width;
 
-const sprites = new SpriteSheet();
-
-sprites.loadSprite("anuke",'../assets/sprites/anuke.png')
-sprites.loadSprite("router",'../assets/sprites/router.png')
+const sprites = {
+  anuke: new Image(),
+  router: new Image()
+}
+sprites.anuke.src = './assets/sprites/anuke.png'
+sprites.router.src = './assets/sprites/router.png'
 
 const anukeGame = new GameMain(ClientDriveMobil, c, out, sprites);
 
