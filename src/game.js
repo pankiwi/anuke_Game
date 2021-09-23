@@ -5,15 +5,15 @@ class GameMain {
     this.clientHasMobil = clientHasMobil;
     this.ctx = ctx;
     this.out = out;
-    this.spriteSource = sprites;
+    
   };
   Init() {
     /** player **/
-    SpawPlayer(this.gameWidth / 2, this.gameHeight / 2, 120, this.spriteSource.anuke);
+    SpawPlayer(this.gameWidth / 2, this.gameHeight / 2, 120, sprites.anuke);
     /** add event **/
     this.out.canvas.addEventListener('click', (event) => {
       let angle = MathFs.getAngle(event.clientX, this.out.canvas.width / 2, event.clientY, this.out.canvas.height / 2);
-      global.addObjectGame(new Bullet(global.ObjectGame[0].x, global.ObjectGame[0].y, 100, this.spriteSource.router, 10, angle));
+      global.addObjectGame(new Bullet(global.ObjectGame[0].x, global.ObjectGame[0].y, 100, sprites.router, 10, angle));
     });
   };
   DrawGame() {
