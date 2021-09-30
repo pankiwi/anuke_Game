@@ -6,7 +6,10 @@ let MathFs = {
   AngleToRadians: function(angle){
     return angle * (Math.PI / 180);
   },
-  rand: function(min, max) {
+  randFloat: function(min, max) {
+    return Math.random() * (max - min) + min;
+  },
+  randInit: function(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   },
   DistanceObjects: function(x1,y1,x2,y2){
@@ -14,5 +17,13 @@ let MathFs = {
   },
   DistanceObjects2: function(x1, y1, x2, y2) {
     return Math.hypot(Math.pow(x1 - x2,2),Math.pow(y1 - y2,2));
+  },
+  lerpt: function(time,var1,var2){
+    if(var1 > var2){
+      return var1 -= time;
+    }else
+    if(var1 < var2){
+      return var1 += time;
+    }else return var1
   }
 }

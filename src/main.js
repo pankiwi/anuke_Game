@@ -1,5 +1,5 @@
 
-const ClientDriveMobil = Viewport.GetUserDrive();
+const ClientDriveMobil = 
 /* scrend html */
 const out = document.querySelector("canvas").getContext("2d");
 
@@ -16,10 +16,12 @@ global.WindowRadius = out.canvas.width / c.canvas.width;
 
 const sprites = {
   anuke: new Image(),
-  router: new Image()
+  router: new Image(),
+  banana: new Image()
 }
 sprites.anuke.src = './assets/sprites/anuke.png'
 sprites.router.src = './assets/sprites/router.png'
+sprites.banana.src = './assets/sprites/banana.png'
 
 const anukeGame = new GameMain(ClientDriveMobil, c, out, sprites);
 
@@ -31,10 +33,6 @@ anukeGame.Init();
 /** game loop **/
 function gameLoop() {
   requestAnimationFrame(gameLoop)
-  Draw.RenderCanvas(out, c);
-  
-  c.fillStyle = 'rgba(255,255,255,1)';
-  c.fillRect(0,0,c.canvas.width,c.canvas.height);
   
   anukeGame.UpdateGame();
 

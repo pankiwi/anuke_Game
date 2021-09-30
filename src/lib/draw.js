@@ -24,6 +24,31 @@ class SpriteSheet {
   };
 };
 
+class spriteAnimation {
+  i = 0;
+  counter = 0;
+  constructor(sprite,widthFrame,heightFrame,speedFrame,frames,width,height){
+    this.sprite = sprite;
+    this.widthFrame = widthFrame;
+    this.heightFrame = heightFrame;
+    this.speedFrame = speedFrame;
+    this.frames = frames;
+    this.width = width/2;
+    this.height = height/2;
+  };
+  draw(ctx = new CanvasRenderingContext2D,x,y){
+   ctx.drawImage(this.sprite, 0, this.i * this.heightFrame, this.widthFrame, this.heightFrame, x - this.width/2, y - this.height/2, this.width, this.height);
+
+  };
+  update(deltaTime){
+    this.counter += this.speedFrame * deltaTime;
+    if(this.counter >= 10 ){
+      this.counter = 0;
+      this.i = ++this.i % this.frames;
+    }
+  }
+}
+
 let Draw = {
   DrawImage: function(ctx, img, x, y, alfa, size) {
     ctx.save();
@@ -33,7 +58,7 @@ let Draw = {
   },
 
   RenderCanvas: function(ctx, c) {
-    ctx.drawImage(c.canvas, 0, 0, c.canvas.width, c.canvas.height, 0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.drawImage(c.canvas, 0, 0, c.canvas.width, c.canvas.height,0 ,0, ctx.canvas.width, ctx.canvas.height);
   },
 
   DrawCircle: function(ctx = new CanvasRenderingContext2D, x, y, size, color) {

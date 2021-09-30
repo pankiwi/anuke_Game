@@ -7,7 +7,7 @@ class GameObject {
     this.sizeHit = size / 2 * global.WindowRadius;
     this.type = "GameObject";
     this.canUpdate = false;
-    
+
   };
   draw(ctx = new CanvasRenderingContext2D) {
     //TODO
@@ -21,9 +21,13 @@ class GameObject {
   //colicion :)
   collicionObject(object) {
     if (object) {
-      if (Math.hypot(this.x - object.x, this.y - object.y) - this.sizeHit - object.sizeHit < 1) {
+      if (MathFs.DistanceObjects(this.x, this.y, object.x, object.y) < 1 + this.sizeHit + object.sizeHit) {
         return true;
       } else return false;
+
     };
+  };
+  destroy() {
+   this.removeObject = true;
   };
 };

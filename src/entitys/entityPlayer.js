@@ -3,6 +3,7 @@ class EntityPlayer extends Entity {
     super( x, y, size, img);
     this.type = "player";
   };
+  update(){};
 };
 
 function SpawPlayer(x, y, size, img){

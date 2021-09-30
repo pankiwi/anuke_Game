@@ -13,10 +13,10 @@ class Timer {
   }
 
   // Updates all the timers in this instance.
-  update(deltaTime) {
+  update(time) {
     for (var key in this) {
       if (!isNaN(parseFloat(this[key].cur)) && isFinite(this[key].cur))
-        this[key].cur -= deltaTime;
+        this[key].cur -= time;
     }
   }
 
