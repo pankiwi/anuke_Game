@@ -1,5 +1,5 @@
 class Game {
-  
+
   constructor() {
     this.ClientDriveMobil = null;
     this.canvas = null;
@@ -44,10 +44,12 @@ class Game {
     this.InitGame();
 
     requestAnimationFrame((timeStamp) => this.gameLoop(timeStamp));
-    this.banana = new spriteAnimation(this.sprites.banana,32,60,100,13,200,200)
+    this.banana = new spriteAnimation(this.sprites.banana, 32, 60, 500, 14, 200)
   };
   InitGame() {
-
+    this.imgRotate = 0
+    global.addObjectGame(new Entity(600, 600, 200, 46, this.sprites.banana, { hasAnimation: true, width: 32, height: 60, frames: 14, SpeedFrame: 20 }))
+    global.addObjectGame(new Entity(200, 600, 200, 46, this.sprites.anuke, { hasAnimation: false, width: 32, height: 60, frames: 14, SpeedFrame: 20 }))
   };
   gameLoop(timeStamp) {
     var deltaTime = (timeStamp - this.oldTimeStamp) / 1000;
@@ -56,17 +58,18 @@ class Game {
     this.UpdateGame(deltaTime);
     this.DrawGame();
 
-    requestAnimationFrame(( timeStamp) => this.gameLoop(timeStamp))
-    
+    requestAnimationFrame((timeStamp) => this.gameLoop(timeStamp))
+
   };
   DrawGame() {
-    this.banana.draw(this.ctx,200,200)
+    this.banana.draw(this.ctx, 200, 200, 270, 1)
+    Draw.DrawImage(this.ctx, this.sprites.router, 400, 400, 1, 200, this.imgRotate)
     Draw.RenderCanvas(this.canvas, this.ctx);
 
-    this.ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    this.ctx.fillStyle = 'rgba(255,255,255,.22)';
     this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-     
-    
+
+
     global.ObjectGame.forEach((object, indexObject) => {
       object.draw(this.ctx);
       if (global.debuger) {
@@ -76,6 +79,7 @@ class Game {
   };
   UpdateGame(deltaTime) {
     this.banana.update(deltaTime)
+    this.imgRotate += 100 * deltaTime
     /** remove object **/
     global.removeObjectGame();
     global.removeParticle();
@@ -90,6 +94,7 @@ class Game {
       object.update(deltaTime, this);
       //  console.log(object)
     });
+
 
 
   };

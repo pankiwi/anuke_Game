@@ -1,8 +1,9 @@
 class GameObject {
   removeObject = false
-  constructor(x, y, size) {
+  constructor(x, y, size, rotation) {
     this.x = x;
     this.y = y;
+    this.rotation = rotation;
     this.size = size * global.WindowRadius;
     this.sizeHit = size / 2 * global.WindowRadius;
     this.type = "GameObject";
@@ -13,7 +14,14 @@ class GameObject {
     //TODO
   };
   debugCollicion(ctx) {
+    let x, y;
+    
+    x = this.x + Math.cos(Math.PI * this.rotation / 180) * this.size;
+    y = this.y + Math.sin(Math.PI * this.rotation / 180) * this.size;
+    
     Draw.DrawCircle(ctx, this.x, this.y, this.sizeHit, "blue");
+   
+   Draw.DrawLine(ctx, this.x, this.y, x, y, 5, "red")
   }
   update(deltaTime, ecene) {
     //TODO
@@ -28,6 +36,6 @@ class GameObject {
     };
   };
   destroy() {
-   this.removeObject = true;
+    this.removeObject = true;
   };
 };

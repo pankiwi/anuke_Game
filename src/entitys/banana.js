@@ -1,33 +1,20 @@
-class banana extends Entity {
-  constructor(x, y, size, img, speed, angle) {
-    super(x, y, size, img);
-    this.speed = speed;
-    this.angle = MathFs.AngleToRadians(angle);
-    this.type = 'banana';
-    
-    this.animation =  new spriteAnimation(img,32,60,speed*2,13,size,size);
+class banana extends EntityMove {
+  constructor(x, y, size, rotation, img, spriteSheet = {hasAnimation:false,width:0,height:0,frames:0,SpeedFrame:0}, speed, vel) {
+    super(x, y, size, rotation, img, spriteSheet, speed, vel);
   };
-  draw(ctx){
-    this.animation.draw(ctx,this.x,this.y);
-  };
-  update(ecene) {
-    this.animation.update();
-    
+  update(deltaTime,ecene) {
     global.findObject('bullet').forEach((bullet) => {
       if (this.collicionObject(bullet)) {
         this.destroy();
         bullet.destroy();
       }
     })
-    super.update(ecene);
-
-    /** move bullet **/
-    this.x += Math.cos(this.angle) * this.speed;
-    this.y += Math.sin(this.angle) * this.speed;
+    
+    super.update(deltaTime,ecene);
   }
 }
 
 
-function SpawBanana(x = 0, y = 0, size, sprite, speed, angle) {
-  global.addObjectGame(new banana(x, y, size, sprite, speed, angle));
+function SpawEntityBananaAngle(x = 0, y = 0, size, img, SpriteSheet = { hasAnimation: false, width: 0, height: 0, frames: 0, SpeedFrame: 0 }, speed, angle) {
+  global.addObjectGame(new banana(x, y, size, img, spriteAnimation, speed, { x: Math.cos(angle), y: Math.sin(angle) }));
 }

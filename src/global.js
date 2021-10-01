@@ -3,7 +3,14 @@ let global = {
   ObjectGame: [],
   Particles: [],
   WindowRadius: 1,
-  debuger: true,
+  debuger: false,
+  setDebug: function(){
+    if(!this.debuger){
+    this.debuger = true
+    }else if(this.debuger){
+      this.debuger = false
+    } 
+  },
   /* add object */
   addParticle: function(object) {
     if(this.Particles.length < 1000) this.Particles.push(object);
