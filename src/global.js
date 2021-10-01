@@ -4,12 +4,20 @@ let global = {
   Particles: [],
   WindowRadius: 1,
   debuger: false,
+  UpdateGame: true,
   setDebug: function(){
     if(!this.debuger){
     this.debuger = true
     }else if(this.debuger){
       this.debuger = false
     } 
+  },
+  pause: function(){
+    if (!this.UpdateGame) {
+      this.UpdateGame = true
+    } else if (this.UpdateGame) {
+      this.UpdateGame = false
+    }
   },
   /* add object */
   addParticle: function(object) {
@@ -36,4 +44,4 @@ let global = {
   findObjectCallback: function(type, callback = function(object, indexObject, array) {}) {
     this.findObject(type).map(callback);
   }
-};
+}; 

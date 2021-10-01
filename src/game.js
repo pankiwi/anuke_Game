@@ -50,12 +50,26 @@ class Game {
     this.imgRotate = 0
     global.addObjectGame(new Entity(600, 600, 200, 46, this.sprites.banana, { hasAnimation: true, width: 32, height: 60, frames: 14, SpeedFrame: 20 }))
     global.addObjectGame(new Entity(200, 600, 200, 46, this.sprites.anuke, { hasAnimation: false, width: 32, height: 60, frames: 14, SpeedFrame: 20 }))
+    SpawEntityMove(0, 600, 200, 0, this.sprites.banana, { hasAnimation: true, width: 32, height: 60, frames: 14, SpeedFrame: 100 }, 100)
+
+    window.addEventListener('pageshow', () => { global.UpdateGame = true }) 
+    
+    window.addEventListener('pagehide', () => { global.UpdateGame = false });
+    
+    window.addEventListener('keyup', (event) => {
+      switch (event.keyCode) {
+        case 32:
+          global.pause();
+          break;
+      }
+      
+    })
   };
   gameLoop(timeStamp) {
     var deltaTime = (timeStamp - this.oldTimeStamp) / 1000;
     this.oldTimeStamp = timeStamp;
 
-    this.UpdateGame(deltaTime);
+    if (global.UpdateGame) this.UpdateGame(deltaTime);
     this.DrawGame();
 
     requestAnimationFrame((timeStamp) => this.gameLoop(timeStamp))
