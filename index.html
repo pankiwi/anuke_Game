@@ -54,7 +54,7 @@
 </head>
 
 <body style="overflow: hidden">
-  <p>v0.1</p>
+  <p>v0.2</p>
   <canvas width="100" height="100">
     sorry you drive is shit
   </canvas>
@@ -66,20 +66,23 @@
   <script src="./src/lib/timer.js"></script>
   <script src="./src/entitys/gameObject.js"></script>
   <script src="./src/entitys/entity.js"></script>
-    <script src="./src/entitys/entityMove.js"></script>
+  <script src="./src/entitys/entityMove.js"></script>
   <script src="./src/entitys/entityEnemy.js"></script>
   <script src="./src/entitys/entityPlayer.js"></script>
+  <script src="./src/entitys/enemys/enemy.js"></script>
   <script src="./src/entitys/bullet/bullet.js"></script>
   <script src="./src/entitys/bullet/bulletHoming.js"></script>
+  <script src="./src/entitys/bullet/bulletRicochet.js"></script>
   <script src="./src/entitys/banana.js"></script>
+  <script src="./src/types.js"></script>
   <script src="./src/SpawRandom.js"></script>
   <script src="./src/generationInterval.js"></script>
   <script src="./src/game.js"></script>
-   <script type="text/javascript" charset="utf-8">
-     window.onload = () => {
-       let game = new Game();
-     }
-   </script>
+  <script type="text/javascript" charset="utf-8">
+    window.onload = () => {
+      let game = new Game();
+    }
+  </script>
 </body>
 
 </html>

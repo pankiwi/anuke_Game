@@ -5,6 +5,9 @@ let global = {
   WindowRadius: 1,
   debuger: false,
   UpdateGame: true,
+  objectLog(){
+    console.table(this.ObjectGame)
+  },
   setDebug: function(){
     if(!this.debuger){
     this.debuger = true
@@ -29,19 +32,14 @@ let global = {
   },
   /* add object */
   addObjectGame: function(object) {
-    this.ObjectGame.push(object);
+   if(this.ObjectGame.length < 1000) this.ObjectGame.push(object);
   },
   /* remove object */
   removeObjectGame: function() {
-    this.ObjectGame = this.ObjectGame.filter(object => !object.removeObject)
+    this.ObjectGame = this.ObjectGame.filter(object => !object.removeObject);
   },
   /* return array object */
   findObject: function(type) {
     return this.ObjectGame.filter((o) => 'type' in o && o.type === type);
-
-  },
-
-  findObjectCallback: function(type, callback = function(object, indexObject, array) {}) {
-    this.findObject(type).map(callback);
   }
 }; 

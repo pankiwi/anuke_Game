@@ -34,36 +34,91 @@ class Game {
     this.sprites = {
       anuke: new Image(),
       router: new Image(),
-      banana: new Image()
+      banana: new Image(),
+      juction: new Image(),
+      hull: new Image()
     };
 
     this.sprites.anuke.src = './assets/sprites/anuke.png';
     this.sprites.router.src = './assets/sprites/router.png';
     this.sprites.banana.src = './assets/sprites/banana.png';
+    this.sprites.juction.src = './assets/sprites/juction.png';
+    this.sprites.hull.src = './assets/sprites/hull.png';
 
-    this.InitGame();
+    window.addEventListener('resize', () => {
+      // resize
+      this.ctx.canvas.width = Viewport.ReziseCanvas(this.ClientDriveMobil, this.ctx.canvas).x;
+      this.ctx.canvas.height = Viewport.ReziseCanvas(this.ClientDriveMobil, this.ctx.canvas).y;
 
-    requestAnimationFrame((timeStamp) => this.gameLoop(timeStamp));
-    this.banana = new spriteAnimation(this.sprites.banana, 32, 60, 500, 14, 200)
-  };
-  InitGame() {
-    this.imgRotate = 0
-    global.addObjectGame(new Entity(600, 600, 200, 46, this.sprites.banana, { hasAnimation: true, width: 32, height: 60, frames: 14, SpeedFrame: 20 }))
-    global.addObjectGame(new Entity(200, 600, 200, 46, this.sprites.anuke, { hasAnimation: false, width: 32, height: 60, frames: 14, SpeedFrame: 20 }))
-    SpawEntityMove(0, 600, 200, 0, this.sprites.banana, { hasAnimation: true, width: 32, height: 60, frames: 14, SpeedFrame: 100 }, 100)
+      global.WindowRadius = this.canvas.canvas.width / this.ctx.canvas.width;
 
-    window.addEventListener('pageshow', () => { global.UpdateGame = true }) 
-    
+      this.gameHeight = this.ctx.canvas.height;
+      this.gameWidth = this.ctx.canvas.width;
+    })
+
+    window.addEventListener('pageshow', () => { global.UpdateGame = true })
+
     window.addEventListener('pagehide', () => { global.UpdateGame = false });
-    
+
     window.addEventListener('keyup', (event) => {
       switch (event.keyCode) {
         case 32:
           global.pause();
           break;
       }
-      
+
     })
+
+    this.InitGame();
+
+    requestAnimationFrame((timeStamp) => this.gameLoop(timeStamp));
+  };
+  InitGame() {
+    //cretre type player
+    this.playerBullets = [
+      ];
+    let banana = new BulletRicochet({
+      size: 200,
+      img: this.sprites.banana,
+      animation: {
+        frames: 14,
+        speedFrame: 200,
+        width: 32,
+        height: 60
+      },
+      speed: 400,
+      lifeTime: 1 //s
+    })
+
+    let enemy = new Enemy({
+      size: 200,
+      img: this.sprites.anuke,
+      speed: 100
+    });
+    enemy.at(500, 0, 95)
+
+    let player = new EntityPlayer({
+      size: 120,
+      img: this.sprites.anuke,
+      hullSprite: this.sprites.hull
+    })
+
+    player.setInit(this.gameWidth / 2, this.gameHeight / 2, 270)
+
+    global.addObjectGame(player)
+
+    //player
+    this.player = global.findObject("player")[0];
+
+    this.canvas.canvas.addEventListener('click', (event) => {
+      event.preventDefault();
+      let x, y;
+      let rot = MathFs.getAngle(event.clientX, innerWidth / 2, event.clientY, innerHeight / 2);
+      this.player.setRotation(rot);
+
+      banana.at(this.gameWidth / 2, this.gameHeight / 2, rot)
+    })
+    this.rot = 0
   };
   gameLoop(timeStamp) {
     var deltaTime = (timeStamp - this.oldTimeStamp) / 1000;
@@ -76,8 +131,6 @@ class Game {
 
   };
   DrawGame() {
-    this.banana.draw(this.ctx, 200, 200, 270, 1)
-    Draw.DrawImage(this.ctx, this.sprites.router, 400, 400, 1, 200, this.imgRotate)
     Draw.RenderCanvas(this.canvas, this.ctx);
 
     this.ctx.fillStyle = 'rgba(255,255,255,.22)';
@@ -85,15 +138,34 @@ class Game {
 
 
     global.ObjectGame.forEach((object, indexObject) => {
-      object.draw(this.ctx);
-      if (global.debuger) {
-        object.debugCollicion(this.ctx);
-      };
+      try {
+        object.draw(this.ctx);
+        if (global.debuger) {
+          object.debugCollicion(this.ctx);
+        };
+      } catch (e) {
+        console.table(object);
+        object.removeObject = true
+      }
     });
+    let arg = [10, 20, 30, 40, 50, 60];
+    let argColor = ["red", "blue", "cyan", "purple", "black", "orange"]
+    for (let i in arg) {
+      let x, y;
+
+      x = (600 + Math.cos(Math.PI * this.rot / 180) * 40) + Math.cos(Math.PI * this.rot / 180) * 20 * i;
+      y = (600 + Math.sin(Math.PI * this.rot / 180) * 40) + Math.sin(Math.PI * this.rot / 180) * 20 * i;
+      this.ctx.save();
+      this.ctx.globalAlpha = 1;
+      Draw.DrawCircle(this.ctx, 600, 600, 20, "pink")
+      Draw.DrawImage(this.ctx, this.sprites.anuke, x, y, 1, 20, this.rot)
+      Draw.DrawLine(this.ctx, 600, 600, x, y, 5, argColor[i])
+
+      this.ctx.restore();
+    }
   };
   UpdateGame(deltaTime) {
-    this.banana.update(deltaTime)
-    this.imgRotate += 100 * deltaTime
+    this.rot++
     /** remove object **/
     global.removeObjectGame();
     global.removeParticle();

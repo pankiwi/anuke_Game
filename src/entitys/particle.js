@@ -1,4 +1,4 @@
-ñ
+
 class Particle extends Entity {
   constructor(x, y, size, img, speed, angle) {
     super(x, y, size, img);

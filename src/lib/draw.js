@@ -1,5 +1,3 @@
-
-
 class spriteAnimation {
   i = 0;
   counter = 0;
@@ -40,17 +38,17 @@ let Draw = {
   },
   DrawImageSheet: function(ctx, img, imgX, imgY, width, heigth, x, y, alfa, size, rotate) {
     ctx.save();
-    
+
     ctx.translate(x, y);
     ctx.rotate(Math.PI / 180 * (rotate + 90));
     ctx.translate(-x, -y);
-    
+
     ctx.globalAlfa = alfa;
-    
-   ctx.drawImage(img, imgX, imgY, width, heigth, x - size / 2, y - size / 2, size, size);
-   
-   ctx.setTransform(1, 0, 0, 1, 0, 0);
-   ctx.restore();
+
+    ctx.drawImage(img, imgX, imgY, width, heigth, x - size / 2, y - size / 2, size, size);
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.restore();
   },
   RenderCanvas: function(ctx, c) {
     ctx.drawImage(c.canvas, 0, 0, c.canvas.width, c.canvas.height, 0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -64,20 +62,28 @@ let Draw = {
     ctx.closePath()
   },
 
-  DrawTxtChaceWidth: function(ctx, x, y, width, widthTxt, color, txt = "", pos = "center", alfa = 1) {
+  DrawTxt: function(ctx = new CanvasRenderingContext2D, x, y, width, widthTxt, color, txt = "", pos = "center", fontStyle = "Arial", alfa = 1, stroke = false, strokeColor = 'black', strokeWidth = 10) {
     ctx.save();
-    ctx.fillStyle = color;
-    ctx.font = (widthTxt) + "px bit";
+
+    ctx.font = widthTxt + "px Arial";
     ctx.globalAlpha = alfa;
     ctx.textAlign = pos;
+
+    if (stroke) {
+      ctx.lineWidth = strokeWidth;
+      ctx.strokeStyle = strokeColor;
+      ctx.strokeText(txt, x, y, width * txt.length);
+    }
+    ctx.fillStyle = color;
     ctx.fillText(txt, x, y, width * txt.length);
+
     ctx.restore();
   },
-  DrawLine(ctx = new CanvasRenderingContext2D, x1, y1, x2, y2, width, color){
+  DrawLine(ctx = new CanvasRenderingContext2D, x1, y1, x2, y2, width, color) {
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
-    ctx.strokeStyle = "red";
+    ctx.strokeStyle = color;
     ctx.lineWidth = width;
     ctx.stroke();
   }
