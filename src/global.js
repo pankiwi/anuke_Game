@@ -1,21 +1,20 @@
 /** global **/
 let global = {
   ObjectGame: [],
-  Particles: [],
   WindowRadius: 1,
   debuger: false,
   UpdateGame: true,
-  objectLog(){
+  objectLog() {
     console.table(this.ObjectGame)
   },
-  setDebug: function(){
-    if(!this.debuger){
-    this.debuger = true
-    }else if(this.debuger){
+  setDebug: function() {
+    if (!this.debuger) {
+      this.debuger = true
+    } else if (this.debuger) {
       this.debuger = false
-    } 
+    }
   },
-  pause: function(){
+  pause: function() {
     if (!this.UpdateGame) {
       this.UpdateGame = true
     } else if (this.UpdateGame) {
@@ -23,16 +22,15 @@ let global = {
     }
   },
   /* add object */
-  addParticle: function(object) {
-    if(this.Particles.length < 1000) this.Particles.push(object);
-  },
-  /* remove object */
-  removeParticle: function() {
-    this.Particles = this.Particles.filter(object => !object.removeObject);
-  },
-  /* add object */
   addObjectGame: function(object) {
-   if(this.ObjectGame.length < 1000) this.ObjectGame.push(object);
+    if (this.ObjectGame.length < 1000) {
+      this.ObjectGame.push(object);
+      this.ObjectGame.sort((a, b) => {
+        if (a.drawLayer < b.drawLayer) return -1
+      })
+      
+      return this.ObjectGame[this.ObjectGame.indexOf(object)];
+    }
   },
   /* remove object */
   removeObjectGame: function() {
@@ -42,4 +40,4 @@ let global = {
   findObject: function(type) {
     return this.ObjectGame.filter((o) => 'type' in o && o.type === type);
   }
-}; 
+};

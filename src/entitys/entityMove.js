@@ -1,6 +1,6 @@
 /** basic bullet **/
 class EntityMove extends Entity {
-  constructor(args = { size: 20, img: new Image().src = "../assets/sprites/anuke.png", animation: { width: 0, height: 0, frames: 0, speedFrame: 0 }, speed: 0 }) {
+  constructor(args = { size: 20, effectDestroy: new effect(), img: new Image().src = "../assets/sprites/anuke.png", animation: { width: 0, height: 0, frames: 0, speedFrame: 0 }, speed: 0 }) {
     super(args);
     this.speed = args.speed;
     this.vel = { x: 0, y: 0 };
@@ -22,13 +22,13 @@ class EntityMove extends Entity {
   at(x, y, rotation, vel) {
     let rot = rotation * (Math.PI / 180);
     let clone = new this.typeContent(this.args);
-    
+
     if (vel) {
       clone.setInit(x, y, rotation, vel);
     } else {
       clone.setInit(x, y, rotation, { x: Math.cos(rot), y: Math.sin(rot) });
     };
-
-    global.addObjectGame(clone);
+    let cloneObject = global.addObjectGame(clone);
+    return cloneObject;
   }
 };

@@ -1,15 +1,15 @@
 class Bullet extends EntityMove {
-  constructor(args = { size: 20, img: new Image().src = "../assets/sprites/anuke.png", animation: { width: 0, height: 0, frames: 0, speedFrame: 0 }, speed: 0, lifeTime: 100 }) {
+  constructor(args = { size: 20, effectDestroy: new effect(), img: new Image().src = "../assets/sprites/anuke.png", animation: { width: 0, height: 0, frames: 0, speedFrame: 0 }, speed: 0, lifeTime: 100, fragmet: { bullet: new EntityMove(), amount: 0, rotationFragmemts: 10, } }) {
     super(args);
     if (args.lifeTime) this.lifeTime = args.lifeTime;
-
+    this.drawLayer = 15;
     this.typeContent = Bullet;
     this.type = 'bullet';
   };
   debugCollicion(ctx = new CanvasRenderingContext2D) {
     super.debugCollicion(ctx);
     if (this.lifeTime && this.lifeTime > 0) {
-      Draw.DrawTxt(ctx, this.x, this.y + this.sizeHit/3, 200, 50, "white",`${Math.floor(this.lifeTime)}`, "center", "Arial", 1,true,"black",10);
+      Draw.DrawTxt(ctx, this.x, this.y + this.sizeHit / 3, 200, 50, "white", `${Math.floor(this.lifeTime)}`, "center", "Arial", 1, true, "black", 10);
     }
   }
   update(deltaTime, ecene) {
@@ -21,10 +21,10 @@ class Bullet extends EntityMove {
     });
 
     if (this.lifeTime) {
-      if (this.lifeTime <= 0){
+      if (this.lifeTime <= 0) {
         this.removeObject = true;
-      }else{
-      this.lifeTime -= deltaTime;
+      } else {
+        this.lifeTime -= deltaTime;
       }
     }
 

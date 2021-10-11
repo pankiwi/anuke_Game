@@ -9,7 +9,8 @@ class Game {
     this.gameHeight = 0;
     this.gameWidth = 0;
     this.sprites = null;
-
+    this.pauseGame = false;
+    this.startGame = true;
     this.init();
   };
   init() {
@@ -35,15 +36,17 @@ class Game {
       anuke: new Image(),
       router: new Image(),
       banana: new Image(),
-      juction: new Image(),
+      junction: new Image(),
       hull: new Image()
     };
 
     this.sprites.anuke.src = './assets/sprites/anuke.png';
     this.sprites.router.src = './assets/sprites/router.png';
     this.sprites.banana.src = './assets/sprites/banana.png';
-    this.sprites.juction.src = './assets/sprites/juction.png';
+    this.sprites.junction.src = './assets/sprites/junction.png';
     this.sprites.hull.src = './assets/sprites/hull.png';
+
+
 
     window.addEventListener('resize', () => {
       // resize
@@ -74,66 +77,67 @@ class Game {
     requestAnimationFrame((timeStamp) => this.gameLoop(timeStamp));
   };
   InitGame() {
+    this.spawEntitys = new GenerstionInterval(true,() => {
+      spawEnemyBasic(this)
+      
+    },1000)
     //cretre type player
-    this.playerBullets = [
-      ];
-    let banana = new BulletRicochet({
-      size: 200,
-      img: this.sprites.banana,
-      animation: {
-        frames: 14,
-        speedFrame: 200,
-        width: 32,
-        height: 60
-      },
-      speed: 400,
-      lifeTime: 1 //s
+    this.playerBullets = new playerShotConfig();
+
+    this.playerBullets.addBullet({
+      type: new Bullet({
+        size: 60,
+        img: this.sprites.router,
+        speed: 600,
+        effectDestroy: effects.explotionEntitySmall
+      }),
+      chanceShot: 1
     })
-
-    let enemy = new Enemy({
-      size: 200,
-      img: this.sprites.anuke,
-      speed: 100
-    });
-    enemy.at(500, 0, 95)
-
+    //player
     let player = new EntityPlayer({
       size: 120,
       img: this.sprites.anuke,
       hullSprite: this.sprites.hull
     })
 
+    
     player.setInit(this.gameWidth / 2, this.gameHeight / 2, 270)
 
-    global.addObjectGame(player)
+    this.player = global.addObjectGame(player)
 
-    //player
-    this.player = global.findObject("player")[0];
-
+    //shot
     this.canvas.canvas.addEventListener('click', (event) => {
       event.preventDefault();
       let x, y;
       let rot = MathFs.getAngle(event.clientX, innerWidth / 2, event.clientY, innerHeight / 2);
       this.player.setRotation(rot);
+      this.playerBullets.atShot(this.gameWidth / 2, this.gameHeight / 2, rot)
 
-      banana.at(this.gameWidth / 2, this.gameHeight / 2, rot)
+       Sounds.PlaySound('shot', 0.01)
     })
-    this.rot = 0
+
   };
   gameLoop(timeStamp) {
     var deltaTime = (timeStamp - this.oldTimeStamp) / 1000;
     this.oldTimeStamp = timeStamp;
 
-    if (global.UpdateGame) this.UpdateGame(deltaTime);
-    this.DrawGame();
+    this.update(deltaTime);
 
     requestAnimationFrame((timeStamp) => this.gameLoop(timeStamp))
 
   };
+  //updateAll
+  update(deltaTime) {
+    if (!global.UpdateGame) this.pauseGame = true
+
+    if (global.UpdateGame) this.UpdateGame(deltaTime);
+    this.DrawGame();
+  }
   DrawGame() {
+
     Draw.RenderCanvas(this.canvas, this.ctx);
 
-    this.ctx.fillStyle = 'rgba(255,255,255,.22)';
+    this.ctx.fillStyle = 'rgba(555,555,555,.22)';
     this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
 
@@ -145,30 +149,18 @@ class Game {
         };
       } catch (e) {
         console.table(object);
+        console.log(e)
         object.removeObject = true
       }
     });
-    let arg = [10, 20, 30, 40, 50, 60];
-    let argColor = ["red", "blue", "cyan", "purple", "black", "orange"]
-    for (let i in arg) {
-      let x, y;
 
-      x = (600 + Math.cos(Math.PI * this.rot / 180) * 40) + Math.cos(Math.PI * this.rot / 180) * 20 * i;
-      y = (600 + Math.sin(Math.PI * this.rot / 180) * 40) + Math.sin(Math.PI * this.rot / 180) * 20 * i;
-      this.ctx.save();
-      this.ctx.globalAlpha = 1;
-      Draw.DrawCircle(this.ctx, 600, 600, 20, "pink")
-      Draw.DrawImage(this.ctx, this.sprites.anuke, x, y, 1, 20, this.rot)
-      Draw.DrawLine(this.ctx, 600, 600, x, y, 5, argColor[i])
-
-      this.ctx.restore();
-    }
   };
+
   UpdateGame(deltaTime) {
-    this.rot++
+
     /** remove object **/
     global.removeObjectGame();
-    global.removeParticle();
+
 
     /** update Object **/
     global.ObjectGame.filter(object => object.canUpdate).forEach(object => {
@@ -176,10 +168,6 @@ class Game {
       //  console.log(object)
     });
 
-    global.Particles.filter(object => object.canUpdate).forEach(object => {
-      object.update(deltaTime, this);
-      //  console.log(object)
-    });
 
 
 

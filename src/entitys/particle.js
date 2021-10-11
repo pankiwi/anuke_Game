@@ -1,42 +1,34 @@
+class Particle extends EntityMove {
+  constructor(args = { size: 20, img: new Image().src = "../assets/sprites/anuke.png", animation: { width: 0, height: 0, frames: 0, speedFrame: 0, bucle: false }, speed: 0, gravity: { y: 0, x: 0 }, hasAlfa: false, lifeTime: 10 }) {
+    super(args);
+    this.gravity = args.gravity;
+    this.hasAlfa = args.hasAlfa;
+    this.lifeTime = args.lifeTime;
+    this.drawLayer = 20;
+    this.typeContent = Particle;
+    this.type = "particle";
 
-class Particle extends Entity {
-  constructor(x, y, size, img, speed, angle) {
-    super(x, y, size, img);
-    this.speed = speed;
-    this.angle = MathFs.AngleToRadians(angle);
-    this.pierce = false;
-    this.alfa = 1;
-    this.type = "none";
   };
-  draw(ctx){
-    Draw.DrawImage(ctx,this.img,this.x,this.y,this.alfa,this.size)
-  }
-  update(ecene) {
-
-    global.findObject('enemy').forEach((enemy) => {
-      if (this.collicionObject(enemy)) {
-        this.destroy();
-        enemy.destroy();
+  move(deltaTime) {
+    this.x += ((this.vel.x * this.speed) + this.gravity.x) * deltaTime;
+    this.y += ((this.vel.y * this.speed) + this.gravity.y) * deltaTime;
+  };
+  update(deltaTime, ecene) {
+    if (this.lifeTime <= 0) {
+      if (!this.hasAlfa) {
+        this.removeObject = true;
+      } else {
+        if (this.alfa <= 0.05) {
+          this.removeObject = true;
+        } else {
+          this.alfa -= deltaTime;
+        }
       }
-    })
+    } else {
+      this.lifeTime -= deltaTime;
+    }
 
-    super.update(ecene)
 
-
-    /** move bullet **/
-    if(this.alfa > 0){
-    this.alfa -= 0.1
-    this.x += Math.cos(this.angle) * this.speed;
-    this.y += Math.sin(this.angle) * this.speed;
-    }else this.removeObject = true
+    super.update(deltaTime, ecene);
   };
-  destroy() {
-  //TODO
-  };
-};
-
-function SpawParticles(amount, x = 0, y = 0, MinSize, MaxSize, sprite, MinSpeed, MaxSpeed, MinAngle, MaxAngle) {
-  for(let i = 0; i < amount; i++){
-  global.addParticle(new Particle(x, y, , sprite, speed, angle));
-  }
 }

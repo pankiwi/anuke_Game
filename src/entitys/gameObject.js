@@ -1,8 +1,6 @@
-
-
 class GameObject {
   removeObject = false
-  constructor(args = { size: 10 }) {
+  constructor(args = { size: 10, effectDestroy: new effect() }) {
     /* for clone type */
     this.args = args;
     /* coords */
@@ -14,7 +12,11 @@ class GameObject {
     this.size = args.size * global.WindowRadius;
     /* real width */
     this.sizeHit = args.size / 2 * global.WindowRadius;
+    /* effect */
+    this.effectDestroy = args.effectDestroy;
     /* things */
+    this.drawLayer = 1// OBJECT
+    
     this.typeContent = GameObject;
     this.type = "GameObject";
     this.canUpdate = false;
@@ -30,8 +32,8 @@ class GameObject {
   debugCollicion(ctx = new OffscreenCanvasRenderingContext2D) {
     let x, y;
 
-    x = this.x + MathFs.trnsX(this.rotation,this.sizeHit * 2);
-    y = this.y + MathFs.trnsY(this.rotation,this.sizeHit * 2);
+    x = this.x + MathFs.trnsX(this.rotation, this.sizeHit * 2);
+    y = this.y + MathFs.trnsY(this.rotation, this.sizeHit * 2);
     ctx.save();
     ctx.globalAlpha = 0.2;
     Draw.DrawCircle(ctx, this.x, this.y, this.sizeHit, "blue");
@@ -53,13 +55,17 @@ class GameObject {
   };
   destroy() {
     this.removeObject = true;
+    this.effectDestroy.at(this.x, this.y, this.rotation, this);
   };
   remove() {
     this.removeObject = true;
   };
   at(x, y, rotation) {
-    let clone = new this.typeContent(this.args)
-    clone.setInit(x, y, rotation)
-    global.addObjectGame(clone)
+    let clone = new this.typeContent(this.args);
+    clone.setInit(x, y, rotation);
+    
+   let cloneObject =  global.addObjectGame(clone);
+   
+   return cloneObject
   };
 };

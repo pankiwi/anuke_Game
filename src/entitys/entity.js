@@ -1,10 +1,14 @@
 class Entity extends GameObject {
-  constructor(args = { size: 20, img: new Image().src = "../assets/sprites/anuke.png", animation: { width: 0, height: 0, frames: 0, speedFrame: 0 } }) {
+  constructor(args = { size: 20, effectDestroy: new effect(), img: new Image().src = "../assets/sprites/anuke.png", animation: { width: 0, height: 0, frames: 0, speedFrame: 0, bucle: true } }) {
     super(args);
+    /* img */
     this.img = args.img;
+    /* alfa */
     this.alfa = 1;
+    /*animation*/
     this.animation = args.animation;
     if (args.animation) this.animator = new spriteAnimation(this.img, args.animation.width, args.animation.height, args.animation.speedFrame, args.animation.frames, this.size);
+    /* othrr */
     this.typeContent = Entity;
     this.type = "EntityNull";
     this.canUpdate = true;
@@ -18,17 +22,14 @@ class Entity extends GameObject {
   }
   removeScreend(ecene) {
     /** remove object screend **/
-    if (this.x > ecene.gameWidth + this.sizeHit) this.removeObject = true;
+    if (this.x > ecene.gameWidth + this.size || this.x < 0 - this.size ) this.remove();
 
-    if (this.x > ecene.gameHeight + this.sizeHit) this.removeObject = true;
+    if (this.y > ecene.gameHeight + this.size  || this.y < 0 - this.size ) this.remove();
 
-    if (this.x < 0 - this.sizeHit) this.removeObject = true;
-
-    if (this.y < 0 - this.sizeHit) this.removeObject = true;
   };
   update(deltaTime, ecene) {
     if (this.animation) this.animator.update(deltaTime);
 
-    this.removeScreend(ecene);
+ //   this.removeScreend(ecene);
   };
 };
