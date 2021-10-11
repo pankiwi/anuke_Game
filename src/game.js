@@ -134,7 +134,7 @@ class Game {
     this.DrawGame();
   }
   DrawGame() {
-
+    Draw.DrawTxt(this.ctx, this.gameWidth/2, this.gameHeight/3,200 * global.WindowRadius,50,"white",'' + global.findObject('enemy').length,"center","Arial",1,true,"black", 10 * global.WindowRadius)
     Draw.RenderCanvas(this.canvas, this.ctx);
 
     this.ctx.fillStyle = 'rgba(555,555,555,.22)';
