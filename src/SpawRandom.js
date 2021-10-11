@@ -21,5 +21,5 @@ function spawEnemyBasic(this_) {
   };
 
   angle = MathFs.getAngle(this_.gameWidth / 2, x, this_.gameHeight / 2, y);
-  
+  enemy.at(x, y, angle)
 }
