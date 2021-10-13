@@ -7,11 +7,10 @@ class spriteAnimation {
     this.heightFrame = heightFrame;
     this.speedFrame = speedFrame;
     this.frames = frames;
-    this.size = size;
     this.animationBucle = bucle;
     this.done = false;
   };
-  draw(ctx = new CanvasRenderingContext2D, x, y, rotate, alfa) {
+  draw(ctx = new CanvasRenderingContext2D, x, y, rotate, alfa ,size) {
     Draw.DrawImageSheet(ctx, this.img, 0, this.i * this.heightFrame, this.widthFrame, this.heightFrame, x, y, alfa, this.size, rotate)
 
   };

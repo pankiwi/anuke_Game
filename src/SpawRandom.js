@@ -1,7 +1,7 @@
 function spawEnemyBasic(this_) {
   let x, y, angle, size;
 
-  size = MathFs.randFloat(80, 150);
+  size = MathFs.randFloat(100, 150);
 
   let enemy = new Enemy({
     size: size,

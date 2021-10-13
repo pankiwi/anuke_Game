@@ -11,7 +11,7 @@ class GameObject {
     /* width */
     this.size = args.size * global.WindowRadius;
     /* real width */
-    this.sizeHit = args.size / 2 * global.WindowRadius;
+    this.sizeHit = (args.size / 2) * global.WindowRadius;
     /* effect */
     this.effectDestroy = args.effectDestroy;
     /* things */
@@ -20,6 +20,12 @@ class GameObject {
     this.typeContent = GameObject;
     this.type = "GameObject";
     this.canUpdate = false;
+  };
+  getSize() {
+    return this.size/global.WindowRadius;
+  };
+  getBox() {
+    return (this.size/global.WindowRadius)/2;
   };
   setInit(x = 0, y = 0, rotation = 270) {
     this.x = x;

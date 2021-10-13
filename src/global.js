@@ -23,14 +23,14 @@ let global = {
   },
   /* add object */
   addObjectGame: function(object) {
-    if (this.ObjectGame.length < 1000) {
+    
       this.ObjectGame.push(object);
       this.ObjectGame.sort((a, b) => {
         if (a.drawLayer < b.drawLayer) return -1
       })
       
       return this.ObjectGame[this.ObjectGame.indexOf(object)];
-    }
+    
   },
   /* remove object */
   removeObjectGame: function() {

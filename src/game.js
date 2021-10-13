@@ -14,6 +14,10 @@ class Game {
     this.init();
   };
   init() {
+    this.modal1 = document.getElementById("modal1");
+    this.ui1 = document.getElementById("ui_1");
+    this.ui2 = document.getElementById("ui_2");
+
     this.ClientDriveMobil = Viewport.GetUserDrive();
 
     this.canvas = document.querySelector("canvas").getContext("2d");
@@ -37,7 +41,8 @@ class Game {
       router: new Image(),
       banana: new Image(),
       junction: new Image(),
-      hull: new Image()
+      hull: new Image(),
+      coin: new Image()
     };
 
     this.sprites.anuke.src = './assets/sprites/anuke.png';
@@ -45,8 +50,27 @@ class Game {
     this.sprites.banana.src = './assets/sprites/banana.png';
     this.sprites.junction.src = './assets/sprites/junction.png';
     this.sprites.hull.src = './assets/sprites/hull.png';
+    this.sprites.coin.src = './assets/sprites/coin.png';
+    this.clickModal = 0
 
+    this.modal1.addEventListener('click', () => {
+      if (this.ui1.classList.contains('hidden_') && this.clickModal >= 2) {
+        this.ui1.classList.remove("hidden_");
+        this.ui1.classList.add('show_');
+        this.ui2.classList.add("hidden_");
+        this.ui2.classList.remove('show_');
+        this.clickModal = 0;
+      } else if(this.clickModal >= 2){
+        this.ui1.classList.add("hidden_");
+        this.ui1.classList.remove("show_");
+        this.ui2.classList.add('show_');
+        this.ui2.classList.remove('hidden_');
+        this.clickModal = 0;
+      }else{
+        this.clickModal++
+      }
 
+    });
 
     window.addEventListener('resize', () => {
       // resize
@@ -77,10 +101,11 @@ class Game {
     requestAnimationFrame((timeStamp) => this.gameLoop(timeStamp));
   };
   InitGame() {
-    this.spawEntitys = new GenerstionInterval(true,() => {
+    this.spawEntitys = new GenerstionInterval(true, () => {
       spawEnemyBasic(this)
-      
-    },1000)
+
+    }, 1000)
+    spawEnemyBasic(this)
     //cretre type player
     this.playerBullets = new playerShotConfig();
 
@@ -100,7 +125,7 @@ class Game {
       hullSprite: this.sprites.hull
     })
 
-    
+
     player.setInit(this.gameWidth / 2, this.gameHeight / 2, 270)
 
     this.player = global.addObjectGame(player)
@@ -113,7 +138,7 @@ class Game {
       this.player.setRotation(rot);
       this.playerBullets.atShot(this.gameWidth / 2, this.gameHeight / 2, rot)
 
-       Sounds.PlaySound('shot', 0.01)
+      Sounds.PlaySound('shot', 0.01)
     })
 
   };
@@ -128,13 +153,16 @@ class Game {
   };
   //updateAll
   update(deltaTime) {
-    if (!global.UpdateGame) this.pauseGame = true
+    if (this.startGame) {
 
-    if (global.UpdateGame) this.UpdateGame(deltaTime);
-    this.DrawGame();
+      if (global.UpdateGame) this.UpdateGame(deltaTime);
+
+      this.DrawGame();
+
+    }
+
   }
   DrawGame() {
-    Draw.DrawTxt(this.ctx, this.gameWidth/2, this.gameHeight/3,200 * global.WindowRadius,50,"white",'' + global.findObject('enemy').length,"center","Arial",1,true,"black", 10 * global.WindowRadius)
     Draw.RenderCanvas(this.canvas, this.ctx);
 
     this.ctx.fillStyle = 'rgba(555,555,555,.22)';
@@ -153,6 +181,9 @@ class Game {
         object.removeObject = true
       }
     });
+
+    if (this.pauseGame) Draw.DrawTxt(this.ctx, this.gameWidth / 2, this.gameHeight / 2, 300, 100, 'white', "pause", "center", "Arial", 1, true, "black", 320)
+
 
   };
 

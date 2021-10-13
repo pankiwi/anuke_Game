@@ -1,5 +1,5 @@
 class EntityPlayer extends Entity {
-  hulls = 5; //number hull 
+  hulls = 0; //number hull 
   maxHulls = 5;
   dead = false; //TODO
   constructor(args = { size: 20, effectDestroy: new effect(), img: new Image().src = "../assets/sprites/anuke.png", hullSprite: new Image(), animation: { width: 0, height: 0, frames: 0, speedFrame: 0 } }) {
