@@ -10,7 +10,7 @@ class spriteAnimation {
     this.animationBucle = bucle;
     this.done = false;
   };
-  draw(ctx = new CanvasRenderingContext2D, x, y, rotate, alfa ,size) {
+  draw(ctx = new CanvasRenderingContext2D, x, y, rotate, alfa, size) {
     Draw.DrawImageSheet(ctx, this.img, 0, this.i * this.heightFrame, this.widthFrame, this.heightFrame, x, y, alfa, this.size, rotate)
 
   };
@@ -19,28 +19,28 @@ class spriteAnimation {
     if (this.counter >= 10 && !this.done) {
       this.counter = 0;
       this.i++
-      if(this.i === this.frames && !this.animationBucle) this.done = true;
+      if (this.i === this.frames && !this.animationBucle) this.done = true;
       this.i %= this.frames;
     }
   };
-  IsDone(){
+  IsDone() {
     return this.done;
   }
 }
 
 let Draw = {
   DrawImage: function(ctx = new CanvasRenderingContext2D, img, x, y, alfa, size, rotate) {
-    ctx.save();
+
     ctx.translate(x, y);
     ctx.rotate(Math.PI / 180 * (rotate + 90));
     ctx.translate(-x, -y);
-
+    ctx.save();
     ctx.globalAlpha = alfa;
-    
-    ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, x - size / 2, y - size / 2, size, size);
 
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, x - size / 2, y - size / 2, size, size);
     ctx.restore();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+
   },
   DrawImageSheet: function(ctx, img, imgX, imgY, width, heigth, x, y, alfa, size, rotate) {
     ctx.save();
