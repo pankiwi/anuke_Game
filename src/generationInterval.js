@@ -7,7 +7,7 @@ class GenerstionInterval {
     if(this.outStart) this.start();
   };
   start(){
-    this.interval_ = setInterval(() => {this.fuction(this);},this.time);
+   this.interval_ = setInterval(() => {this.fuction(this);},this.time);
   };
   stop(){
     clearInterval(this.interval_)

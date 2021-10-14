@@ -1,0 +1,75 @@
+body {
+  margin: 0px;
+  background: white;
+}
+
+.div {
+  position: fixed;
+  user-select: none;
+  margin: 5%;
+  font-size: 120%;
+  font-family: Arial, Helvetica, sans-serif;
+  left: 0px;
+  right: 0px;
+}
+
+.button_ {
+  border: none;
+  margin: 1%;
+  padding: 2%;
+  background: #00000000;
+  font-size: 120%;
+  transition: all 0.5s ease-in-out;
+  color: #F0F0F0;
+  outline: solid 1px #FBFBFB;
+}
+
+.button_:active {
+  outline: solid 1px gray;
+  color: gray;
+}
+
+.button_:hover {
+  outline: solid 1px black;
+  color: black;
+}
+
+.hidden_ {
+  pointer-events: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease-in-out;
+}
+
+.show_ {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.2s ease-in-out;
+}
+
+.statTxt {
+  color: black;
+  display: flex;
+  flex-direction: column;
+  margin: 0%;
+
+}
+
+.statTxt img {
+  height: 10%;
+  width: 10%;
+  max-width: 50px;
+  max-height: 50px;
+  margin: 0.5%;
+  padding: 0%;
+  display: inline-block;
+  float: left;
+}
+
+.statTxt span {
+  display: inline-block;
+  margin: 2% 0.1%;
+  text-align: center;
+  font-size: 120%;
+}

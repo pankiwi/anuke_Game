@@ -4,6 +4,8 @@ let global = {
   WindowRadius: 1,
   debuger: false,
   UpdateGame: true,
+  coinsAnuke: 0,
+  points: 0,
   objectLog() {
     console.table(this.ObjectGame)
   },

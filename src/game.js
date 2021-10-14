@@ -14,11 +14,22 @@ class Game {
     this.init();
   };
   init() {
-    this.modal1 = document.getElementById("modal1");
-    this.ui1 = document.getElementById("ui_1");
-    this.ui2 = document.getElementById("ui_2");
-
     this.ClientDriveMobil = Viewport.GetUserDrive();
+
+    if (this.ClientDriveMobil) {
+      this.ui = {
+        modal: document.getElementById('ui_2'),
+        rp: document.getElementById('rp_2'),
+          c: document.getElementById('c_2'),
+        pauseBtn: document.getElementById('pauseBtn')
+      }
+    } else {
+      this.ui = {
+        modal: document.getElementById('ui_1'),
+        rp: document.getElementById('rp_1'),
+        c: document.getElementById('c_1')
+      }
+    }
 
     this.canvas = document.querySelector("canvas").getContext("2d");
 
@@ -53,25 +64,6 @@ class Game {
     this.sprites.coin.src = './assets/sprites/coin.png';
     this.clickModal = 0
 
-    this.modal1.addEventListener('click', () => {
-      if (this.ui1.classList.contains('hidden_') && this.clickModal >= 2) {
-        this.ui1.classList.remove("hidden_");
-        this.ui1.classList.add('show_');
-        this.ui2.classList.add("hidden_");
-        this.ui2.classList.remove('show_');
-        this.clickModal = 0;
-      } else if(this.clickModal >= 2){
-        this.ui1.classList.add("hidden_");
-        this.ui1.classList.remove("show_");
-        this.ui2.classList.add('show_');
-        this.ui2.classList.remove('hidden_');
-        this.clickModal = 0;
-      }else{
-        this.clickModal++
-      }
-
-    });
-
     window.addEventListener('resize', () => {
       // resize
       this.ctx.canvas.width = Viewport.ReziseCanvas(this.ClientDriveMobil, this.ctx.canvas).x;
@@ -90,17 +82,26 @@ class Game {
     window.addEventListener('keyup', (event) => {
       switch (event.keyCode) {
         case 32:
-          global.pause();
+          this.pause();
           break;
       }
 
     })
-
+    if (this.ui.pauseBtn) {
+      this.ui.pauseBtn.addEventListener('click', () => {
+        this.pause();
+      })
+    }
+    
     this.InitGame();
 
     requestAnimationFrame((timeStamp) => this.gameLoop(timeStamp));
   };
   InitGame() {
+    if (this.ui) this.ui.modal.classList.add('show_');
+
+
+
     this.spawEntitys = new GenerstionInterval(true, () => {
       spawEnemyBasic(this)
 
@@ -131,17 +132,29 @@ class Game {
     this.player = global.addObjectGame(player)
 
     //shot
-    this.canvas.canvas.addEventListener('click', (event) => {
+    window.addEventListener('click', (event) => {
       event.preventDefault();
-      let x, y;
-      let rot = MathFs.getAngle(event.clientX, innerWidth / 2, event.clientY, innerHeight / 2);
-      this.player.setRotation(rot);
-      this.playerBullets.atShot(this.gameWidth / 2, this.gameHeight / 2, rot)
+      if (!this.pauseGame && this.startGame) {
+        let x, y;
+        let rot = MathFs.getAngle(event.clientX, innerWidth / 2, event.clientY, innerHeight / 2);
+        this.player.setRotation(rot);
+        this.playerBullets.atShot(this.gameWidth / 2, this.gameHeight / 2, rot)
 
-      Sounds.PlaySound('shot', 0.01)
+        Sounds.PlaySound('shot', 0.01)
+      }
     })
-
   };
+  pause() {
+    if (!this.pauseGame) {
+      this.pauseGame = true;
+      this.spawEntitys.stop();
+      global.pause();
+    } else {
+      this.pauseGame = false;
+      this.spawEntitys.start();
+      global.pause();
+    }
+  }
   gameLoop(timeStamp) {
     var deltaTime = (timeStamp - this.oldTimeStamp) / 1000;
     this.oldTimeStamp = timeStamp;
@@ -154,7 +167,8 @@ class Game {
   //updateAll
   update(deltaTime) {
     if (this.startGame) {
-
+       this.ui.c.innerHTML = global.coinsAnuke;
+       this.ui.rp.innerHTML = global.points;
       if (global.UpdateGame) this.UpdateGame(deltaTime);
 
       this.DrawGame();
@@ -182,7 +196,7 @@ class Game {
       }
     });
 
-    if (this.pauseGame) Draw.DrawTxt(this.ctx, this.gameWidth / 2, this.gameHeight / 2, 300, 100, 'white', "pause", "center", "Arial", 1, true, "black", 320)
+    if (this.pauseGame) Draw.DrawTxt(this.ctx, this.gameWidth / 2, this.gameHeight / 2, 300, 100, 'white', "pause", "center", "Arial", 1, true, "black", 10)
 
 
   };

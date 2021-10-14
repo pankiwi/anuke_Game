@@ -15,4 +15,13 @@ class Enemy extends EntityMove {
 
     super.update(deltaTime, ecene);
   };
+  destroy(){
+    super.destroy();
+    if(Math.random() < 0.2){
+      global.coinsAnuke += MathFs.randInit(1,2);
+      effects.anukeCoin.at(this.x, this.y, this.rotation, this);
+    };
+    global.points = global.points + 50;
+    
+  }
 }

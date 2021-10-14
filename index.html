@@ -18,105 +18,38 @@
   <title>anuke Game</title>
   <!-- HTML -->
   <!-- Custom Styles -->
-  <style>
-    body {
-      margin: 0px;
-      background: white;
-    }
-
-    .div {
-      position: fixed;
-      user-select: none;
-      margin: 5%;
-      font-size: 120%;
-      font-family: Arial, Helvetica, sans-serif;
-      left: 0px;
-      right: 0px;
-    }
-
-    .button_ {
-      border: none;
-      margin: 2%;
-      padding: 4%;
-      background: white;
-      font-size: 120%;
-      box-shadow: 1px 5px 5px lightgray;
-      transition: all 0.5s linear;
-    }
-
-    .button_:active {
-      outline: solid 1px lightgray;
-    }
-
-    .button_:hover {
-      outline: solid 1px lightgray;
-    }
-
-    .hidden_ {
-      pointer-events: auto;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.2s ease-in-out;
-    }
-
-    .show_ {
-      pointer-events: auto;
-      opacity: 1;
-      visibility: visible;
-      transition: all 0.2s ease-in-out;
-    }
-
-    .statTxt {
-      color: black;
-      display: flex;
-      flex-direction: column;
-      margin: 0%;
-
-    }
-
-    .statTxt img {
-      height: 10%;
-      width: 10%;
-      max-width: 50px;
-      max-height: 50px;
-      margin: 0.5%;
-      padding: 0%;
-      display: inline-block;
-      float: left;
-    }
-
-    .statTxt span {
-      display: inline-block;
-      margin: 2% 0.1%;
-      text-align: center;
-      font-size: 120%;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
 </head>
 
 <body style="overflow: hidden">
   <div id="modal1">
+    <!--- ui for pc --->
     <div class="div hidden_" id="ui_1">
       <div class="statTxt">
         <div>
           <img src="./assets/sprites/router.png" alt="" />
-          <span>Routers Points: </span><span>0</span>
+          <span>Routers Points: </span>
+          <p id="rp_1"></p>
         </div>
         <div>
           <img src="./assets/sprites/coin.png" alt="" />
-          <span>Coins: </span><span>0</span>
+          <span>Coins: </span><span id="c_1"></span>
         </div>
       </div>
     </div>
-    <div class="div" id="ui_2">
+    <!--- ui of mobil --->
+    <div class="div hidden_" id="ui_2">
       <div class="statTxt">
         <div>
           <img src="./assets/sprites/router.png" alt="" />
-          <span>Routers Points: </span><span>0</span>
+          <span>Routers Points: </span><span id="rp_2"></span>
         </div>
         <div>
           <img src=" ./assets/sprites/coin.png" alt="" />
-          <span>Coins: </span><span>0</span>  
+          <span>Coins: </span><span id="c_2"></span>
+        </div>
+        <div>
+          <button id="pauseBtn" class="button_">Pause</button>
         </div>
       </div>
     </div>
@@ -124,6 +57,7 @@
   <canvas width="100" height="100">
     sorry you drive is shit
   </canvas>
+  <p>v2</p>
   <script src="./src/global.js"></script>
   <script src="./src/lib/draw.js"></script>
   <script src="./src/lib/sound.js"></script>
