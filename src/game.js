@@ -14,7 +14,7 @@ class Game {
     this.init();
   };
   init() {
-    this.ClientDriveMobil = Viewport.GetUserDrive();
+    this.ClientDriveMobil = true;
 
     if (this.ClientDriveMobil) {
       this.ui = {
@@ -42,7 +42,7 @@ class Game {
     this.ctx.canvas.width = Viewport.ReziseCanvas(this.ClientDriveMobil, this.ctx.canvas).x;
     this.ctx.canvas.height = Viewport.ReziseCanvas(this.ClientDriveMobil, this.ctx.canvas).y;
 
-    global.WindowRadius = this.canvas.canvas.width / this.ctx.canvas.width;
+    global.WindowRadius = this.canvas.canvas.width/this.ctx.canvas.width ;
 
     this.gameHeight = this.ctx.canvas.height;
     this.gameWidth = this.ctx.canvas.width;
