@@ -100,7 +100,7 @@
        <button class="button-info" id="resetGame">Reset Game</button>
       </div>
     </div>
-  <p>v2.1</p>
+  <p>v10.0</p>
   <script src="./src/global.js"></script>
   <script src="./src/sounds.js"></script>
   <script src="./src/lib/draw.js"></script>
@@ -128,8 +128,10 @@
   <script src="./src/generationInterval.js"></script>
   <script src="./src/game.js"></script>
   <script type="text/javascript" charset="utf-8">
+  global.atlas.loadImages(['./assets/sprites/anuke.png'])
     let game = new Game();
     window.onload = () => {
+      console.log(global.atlas.preloaded)
       document.addEventListener('click', () => {
         if (!game.startGame) {
           if (document.getElementById('ui-info-1').classList.contains("show_") && document.getElementById('ui-info-2').classList.contains("show_")) {

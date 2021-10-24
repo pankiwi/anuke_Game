@@ -141,7 +141,7 @@ class Game {
     //player
     let player = new EntityPlayer({
       size: 120,
-      img: this.sprites.anuke,
+      img: global.atlas.sprites[0],
       hullSprite: this.sprites.hull
     })
 
@@ -264,7 +264,7 @@ class Game {
     //player
     let player = new EntityPlayer({
       size: 120,
-      img: this.sprites.anuke,
+      img: global.atlas.sprites[0],
       hullSprite: this.sprites.hull
     })
 
