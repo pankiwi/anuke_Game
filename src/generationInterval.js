@@ -7,17 +7,20 @@ class GenerstionInterval {
     if(this.outStart) this.start();
   };
   start(){
-   this.interval_ = setInterval(() => {this.fuction(this);},this.time);
+   this.interval_ = setInterval(() => {this.fuction(this)},this.time);
   };
   stop(){
     clearInterval(this.interval_)
   };
   chanceTime(time){
-    clearInterval(this.interval_);
+    this.stop();
     this.time = time;
     this.start();
   };
   setTime(time){
     this.time = time;
+  };
+  getTime(){
+    return this.time;
   };
 };

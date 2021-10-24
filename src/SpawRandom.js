@@ -7,7 +7,7 @@ function spawEnemyBasic(this_) {
     size: size,
     img: this_.sprites.junction,
     speed: MathFs.randFloat(100, 250),
-    effectDestroy: size >= 100 ? effects.explotionEntity : effects.explotionEntitySmall
+    effectDestroy: size >= 120 ? effects.explotionEntity : effects.explotionEntitySmall
   });
   
   size = size * global.WindowRadius;

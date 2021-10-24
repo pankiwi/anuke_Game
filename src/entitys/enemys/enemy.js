@@ -17,7 +17,7 @@ class Enemy extends EntityMove {
   };
   destroy(){
     super.destroy();
-    if(Math.random() < 0.2){
+    if(Math.random() > 0.9){
       global.coinsAnuke += MathFs.randInit(1,2);
       effects.anukeCoin.at(this.x, this.y, this.rotation, this);
     };

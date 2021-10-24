@@ -1,6 +1,6 @@
 let effects = {
   explotionEntity: new effect(0.1, (x, y, rotation, data, this_) => {
-    for (let i = 0; i < MathFs.randFloat(5, 10); i++) {
+    for (let i = 0; i < MathFs.randFloat(5, 8); i++) {
       let particle = new Particle({
         size: MathFs.randFloat(20, data.getSize() / 2),
         img: data.img,
@@ -28,21 +28,56 @@ let effects = {
   anukeCoin: new effect(0.1, (x, y, rotation, data, this_) => {
     let img = new Image();
     img.src = './../assets/sprites/coin.png'
-    for (let i = 0; i < MathFs.randFloat(1, 2); i++) {
       let particle = new Particle({
-        size: MathFs.randFloat(5,10),
+        size: data.getSize(),
         img: img,
-        speed: MathFs.randFloat(100, 200),
+        speed: 0,
         hasAlfa: true,
         lifeTime: this_.time,
-        friction: {
-          x: 0.99,
-          y: 0.95
+        animationParticle: {
+          rotationDelta: 500,
+          scaleDelta: -30
         }
       });
 
       particle.at(x, y, MathFs.randFloat(0, 360));
+    
+  }),
+  chanceRound: new effect(5, (x, y, rotation, data, this_) => {
+    for(var i = 0; i < MathFs.randInit(20,40); i++){
+    let img = new Image();
+    img.src = './../assets/sprites/junction.png'
+    let particle = new Particle({
+      size: MathFs.randFloat(40,100),
+      img: img,
+      speed:  200,
+      hasAlfa: true,
+      lifeTime: this_.time,
+      animationParticle: {
+        rotationDelta: 300,
+        scaleDelta: -20
+      }
+    });
+  
+    particle.at(x, y, i * 35);
     }
+  }),
+  playerDead: new effect(5, (x, y, rotation, data, this_) => {
+    
+      let img = new Image();
+      img.src = './../assets/sprites/anuke.png'
+      let particle = new Particle({
+        size: MathFs.randFloat(40, 100),
+        img: img,
+        speed: 200,
+        hasAlfa: true,
+        lifeTime: this_.time,
+        animationParticle: {
+          scaleDelta: -20
+        }
+      });
+  
+      particle.at(x, y, Math.random() * 360);
+    
   })
-
 }

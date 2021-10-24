@@ -74,11 +74,187 @@ body {
   font-size: 120%;
 }
 
-    canvas {
-      height: 100%;
-      width: 100%;
-      left: 0px;
-      position: fixed;
-      top: 0px;
+canvas {
+  height: 100%;
+  width: 100%;
+  left: 0px;
+  position: fixed;
+  top: 0px;
 
-    }
+}
+
+
+.shopModal {
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  transition: all 0.8s ease;
+}
+
+.modal {
+  background-color: #FFFFFF;
+  width: 80%;
+  height: 90%;
+  max-width: 800px;
+  max-height: 800px;
+  padding: 5%;
+  border-radius: 0px;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: all 0.8s ease;
+}
+
+.shop-img img {
+  height: 50%;
+  width: 50%;
+  max-width: 300px;
+  max-height: 3000px;
+  margin: 0px;
+  padding: 0%;
+}
+.shop-item {
+  width: 45%;
+  height: 45%;
+  outline: 2px solid black;
+  margin: 1%;
+  box-shadow: 0px 0px 10px black;
+  display: inline-table;
+}
+
+.shop-items {
+  background: white;
+  display: block;
+}
+
+.shop-item-title {
+  margin: 0%;
+}
+
+.shop-item-img {
+  height: 40%;
+  width: 40%;
+  max-width: 100px;
+  max-height: 100px;
+  margin: 0px;
+  padding: 0%;
+}
+
+.shop-item-buyPrice {
+  outline: 1px solid black;
+  align-items: left;
+  margin: 0%;
+  padding: 2%;
+}
+
+.shop-item-buyPrice img {
+  height: 20%;
+  width: 20%;
+  max-width: 30px;
+  max-height: 30px;
+  margin: 0%;
+  padding: 0%;
+  display: inline-block;
+  position: left;
+}
+
+.shop-item-buyPrice span {
+  display: inline-block;
+  margin: 0% 0%;
+  text-align: center;
+  font-size: 150%;
+}
+
+.shop-item-button{
+  border: none;
+  margin: 0%;
+  padding: 0.5%;
+  background: #FFFFC0;
+  font-size: 120%;
+  transition: all 0.5s ease-in-out;
+  color: black;
+  outline: 1px solid black;
+  box-shadow: 0px 0px 5px black;
+  width: 100%;
+  height: 100%;
+}
+.shop-item-button:hover {
+  color:#00C9FF;
+}
+.shop-item-button:active {
+  color: lime;
+}
+.shop-item-button-sell {
+  background: white;
+  outline: 2px solid black;
+  box-shadow: 0px 0px 5px white;
+}
+.shop-item-button-sell:hover {
+  background: white;
+  outline: 2px solid black;
+  box-shadow: 0px 0px 5px white;
+}
+.shop-item-button-sell:active {
+  background: white;
+  outline: 2px solid red;
+  box-shadow: 0px 0px 5px white;
+}
+.shop-close-btn {
+  border: none;
+  margin: 0%;
+  padding: 1%;
+  background: #00000000;
+  font-size: 140%;
+  transition: all 0.1s ease-in-out;
+  outline: 1px #000000BD solid;
+  box-shadow: 0px 0px 5px black;
+  color: red;
+  position: fixed;
+  display: flex;
+}
+
+.modalPop {
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  transition: all 0.8s ease;
+}
+
+.button-info {
+  border: none;
+  margin: 0%;
+  padding: 2%;
+  background: #00000000;
+  font-size: 140%;
+  transition: all 0.1s ease-in-out;
+  outline: 2px black solid;
+  color: black;
+}
+
+.modal-2 {
+  background-color: #FFFFFF;
+  width: 50%;
+  height: 40%;
+  max-width: 500px;
+  max-height: 300px;
+  padding: 5%;
+  border-radius: 0px;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: all 0.8s ease;
+}

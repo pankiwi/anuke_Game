@@ -20,8 +20,8 @@ let Viewport = {
       };
     }
     if (!UserDriveIsMobil) {
-      size.x = innerWidth < 1600 ? 1600 : innerWidth;
-      size.y = innerHeight < 1000 ? 1000 : innerHeight;
+      size.x =  innerWidth;
+      size.y =   innerHeight;
     };
 
     return size;

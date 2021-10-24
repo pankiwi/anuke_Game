@@ -2,6 +2,7 @@ class Bullet extends EntityMove {
   constructor(args = { size: 20, effectDestroy: new effect(), img: new Image().src = "../assets/sprites/anuke.png", animation: { width: 0, height: 0, frames: 0, speedFrame: 0 }, speed: 0, lifeTime: 100, fragmet: { bullet: new EntityMove(), amount: 0, rotationFragmemts: 10, } }) {
     super(args);
     if (args.lifeTime) this.lifeTime = args.lifeTime;
+    this.fragment = args.fragmet;
     this.drawLayer = 15;
     this.typeContent = Bullet;
     this.type = 'bullet';
@@ -29,5 +30,17 @@ class Bullet extends EntityMove {
     }
 
     super.update(deltaTime, ecene);
+  };
+  destroy(){
+    super.destroy();
+    if(this.fragment){
+      for(let i = 0; i < this.fragment.amount; i++){
+        if(this.fragment.rotationFragmemts){
+        this.fragment.bullet.at(this.x, this.y, this.fragment.rotationFragmemts * i);
+        }else{
+          this.fragment.bullet.at(this.x, this.y, Math.random() * 360);
+        }
+      }
+    }
   };
 }

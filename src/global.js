@@ -9,6 +9,9 @@ let global = {
   objectLog() {
     console.table(this.ObjectGame)
   },
+  clearObjects() {
+    this.ObjectGame = [];
+  },
   setDebug: function() {
     if (!this.debuger) {
       this.debuger = true
