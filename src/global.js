@@ -46,34 +46,34 @@ let global = {
     return this.ObjectGame.filter((o) => 'type' in o && o.type === type);
   },
   atlas: {
-    sprites: [],
-    loadcount: 0,
-    loadtotal: 0,
-    preloaded: false,
-    loadImages: function(imagefiles) {
-      // Load the images
-      var loadedimages = [];
-      this.loadtotal = imagefiles.length;
-      for (var i = 0; i < imagefiles.length; i++) {
-        // Create the image object
-        var image = new Image();
-        // Set the source url of the image
-        image.src = imagefiles[i];
-        // Add onload event handler
-        image.onload = function() {
-          this.loadcount++;
-          if (this.loadcount == this.loadtotal) {
-            // Done loading
-            this.preloaded = true;
-          }
-        };
+    sprites: {},
+    loadImages: function(imagefiles = [{ id, imagePath }]) {
+      // Load Sounds
+      for (let i in imagefiles) {
+        let image = new Image();
 
-        // Save to the image array
-        loadedimages[i] = image;
-      }
+        image.src = imagefiles[i].imagePath;
 
-      // Return an array of images
-      this.sprites = loadedimages;
+        this.sprites[imagefiles[i].id] = image;
+      };
+    },
+    find(image) {
+      return this.sprites[image];
+    }
+  },
+  sound: {
+    sounds: {},
+    loadSound: function(soundfiles = [{ id, soundPath }]) {
+      for (let i in soundfiles) {
+        let audio = new Audio(soundfiles[i].soundPath);
+
+        this.sounds[soundfiles[i].id] = audio;
+      };
+    },
+    play(sound, volume) {
+      this.sounds[sound].pause();
+      this.sounds[sound].volume = volume;
+      this.sounds[sound].play();
     }
   }
 };

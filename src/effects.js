@@ -1,4 +1,7 @@
 let effects = {
+  none: new effect(0.1, (x, y, rotation, data, this_) => {
+    //TODO
+  }),
   explotionEntity: new effect(0.1, (x, y, rotation, data, this_) => {
     for (let i = 0; i < MathFs.randFloat(5, 8); i++) {
       let particle = new Particle({
@@ -45,11 +48,9 @@ let effects = {
   }),
   chanceRound: new effect(5, (x, y, rotation, data, this_) => {
     for(var i = 0; i < MathFs.randInit(20,40); i++){
-    let img = new Image();
-    img.src = './../assets/sprites/junction.png'
     let particle = new Particle({
       size: MathFs.randFloat(40,100),
-      img: img,
+      img: global.atlas.find("junction"),
       speed:  200,
       hasAlfa: true,
       lifeTime: this_.time,
@@ -64,11 +65,10 @@ let effects = {
   }),
   playerDead: new effect(5, (x, y, rotation, data, this_) => {
     
-      let img = new Image();
-      img.src = './../assets/sprites/anuke.png'
+      
       let particle = new Particle({
         size: MathFs.randFloat(40, 100),
-        img: img,
+        img: global.atlas.find("anuke"),
         speed: 200,
         hasAlfa: true,
         lifeTime: this_.time,

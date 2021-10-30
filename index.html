@@ -92,14 +92,14 @@
       <h2>[click for start game]</h2>
     </div>
   </div>
-    <div class="modalPop hidden_" id="ui-dead">
-      <div class="modal-2">
-       <h1>End Game</h1>
-       <h2>Points: <span id="ui-dead-points">0</span></h2>
-       <h2>Coins: <span id="ui-dead-coins">0</span></h2>
-       <button class="button-info" id="resetGame">Reset Game</button>
-      </div>
+  <div class="modalPop hidden_" id="ui-dead">
+    <div class="modal-2">
+      <h1>End Game</h1>
+      <h2>Points: <span id="ui-dead-points">0</span></h2>
+      <h2>Coins: <span id="ui-dead-coins">0</span></h2>
+      <button class="button-info" id="resetGame">Reset Game</button>
     </div>
+  </div>
   <p>v10.0</p>
   <script src="./src/global.js"></script>
   <script src="./src/sounds.js"></script>
@@ -128,10 +128,15 @@
   <script src="./src/generationInterval.js"></script>
   <script src="./src/game.js"></script>
   <script type="text/javascript" charset="utf-8">
-  global.atlas.loadImages(['./assets/sprites/anuke.png'])
+    let sprites = ["anuke","router","hull","junction","shop","coin","banana","distributor","tntRouter"];
+    let loadSprites = [];
+    for(let i in sprites){
+      let object = {id: sprites[i], imagePath: `./assets/sprites/${sprites[i]}.png`};
+      loadSprites.push(object);
+    };
+    global.atlas.loadImages(loadSprites);
     let game = new Game();
     window.onload = () => {
-      console.log(global.atlas.preloaded)
       document.addEventListener('click', () => {
         if (!game.startGame) {
           if (document.getElementById('ui-info-1').classList.contains("show_") && document.getElementById('ui-info-2').classList.contains("show_")) {

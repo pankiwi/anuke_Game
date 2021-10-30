@@ -41,21 +41,6 @@ class Game {
     this.gameHeight = this.ctx.canvas.height;
     this.gameWidth = this.ctx.canvas.width;
 
-    this.sprites = {
-      anuke: new Image(),
-      router: new Image(),
-      banana: new Image(),
-      junction: new Image(),
-      hull: new Image(),
-      coin: new Image()
-    };
-
-    this.sprites.anuke.src = './assets/sprites/anuke.png';
-    this.sprites.router.src = './assets/sprites/router.png';
-    this.sprites.banana.src = './assets/sprites/banana.png';
-    this.sprites.junction.src = './assets/sprites/junction.png';
-    this.sprites.hull.src = './assets/sprites/hull.png';
-    this.sprites.coin.src = './assets/sprites/coin.png';
     this.clickModal = 0
 
     window.addEventListener('resize', () => {
@@ -117,7 +102,7 @@ class Game {
     })
 
     this.spawEntitys = new GenerstionInterval(false, () => {
-      spawEnemyBasic(this)
+         spawEnemyBasic(this)
     }, 0)
 
     if (this.ui) this.ui.modal.classList.add('show_');
@@ -126,30 +111,11 @@ class Game {
     this.roundPointTotal = 1;
 
     this.spawEntitys.chanceTime(2000);
-    //cretre type player
-    this.playerBullets = new playerShotConfig();
-
-    this.playerBullets.addBullet({
-      type: new Bullet({
-        size: 60,
-        img: this.sprites.router,
-        speed: 600,
-        effectDestroy: effects.explotionEntitySmall
-      }),
-      chanceShot: 1
-    })
+    
+    this.setPlayerBullets();
+    
     //player
-    let player = new EntityPlayer({
-      size: 120,
-      img: global.atlas.sprites[0],
-      hullSprite: this.sprites.hull
-    })
-
-
-    player.setInit(this.gameWidth / 2, this.gameHeight / 2, 270)
-
-    this.player = global.addObjectGame(player)
-
+    this.setPlayer();
     //shot
     addEventListener('click', (event) => {
       event.preventDefault();
@@ -163,6 +129,36 @@ class Game {
 
     this.setShop();
     this.gameLoop(0);
+
+  };
+  setPlayerBullets() {
+    //cretre type player
+    this.playerBullets = new playerShotConfig();
+
+    this.playerBullets.addBullet({
+      type: new Bullet({
+        size: 60,
+        img: global.atlas.find("router"),
+        speed: 600,
+        effectDestroy: effects.explotionEntitySmall
+      }),
+      chanceShot: 1
+    })
+
+  };
+  setPlayer() {
+    //player
+
+    let player = new EntityPlayer({
+      size: 120,
+      img: global.atlas.find("anuke"),
+      hullSprite: global.atlas.find("hull")
+    })
+
+
+    player.setInit(this.gameWidth / 2, this.gameHeight / 2, 270)
+
+    this.player = global.addObjectGame(player)
 
   };
   setShop() {
@@ -213,7 +209,7 @@ class Game {
         this.playerBullets.addBullet({
           type: new BulletRicochet({
             size: 80,
-            img: this.sprites.router,
+            img: global.atlas.find("router"),
             speed: 400,
             effectDestroy: effects.explotionEntitySmall,
             lifeTime: 10
@@ -223,33 +219,33 @@ class Game {
 
       }
     })
-   this.shop.addItem("", {
-     name: "Router Bomb",
-     description: "anuke can shot router can fragment mini router's",
-     price: 10,
-     buy: () => {
-       this.playerBullets.addBullet({
-         type: new Bullet({
-           size: 60,
-           img: this.sprites.router,
-           speed: 300,
-           effectDestroy: effects.explotionEntitySmall,
-           fragmet: {
-             bullet: new Bullet({
-               size: 50,
-               img: this.sprites.router,
-               effectDestroy: effects.explotionEntitySmall,
-               speed: 400,
-               lifeTime: 3
-             }),
-             amount: 3
-           }
-         }),
-         chanceShot: 0.2
-       })
-   
-     }
-   })
+    this.shop.addItem("", {
+      name: "Router Bomb",
+      description: "anuke can shot router can fragment mini router's",
+      price: 10,
+      buy: () => {
+        this.playerBullets.addBullet({
+          type: new Bullet({
+            size: 60,
+            img: global.atlas.find("router"),
+            speed: 300,
+            effectDestroy: effects.explotionEntitySmall,
+            fragmet: {
+              bullet: new Bullet({
+                size: 50,
+                img: this.sprites.router,
+                effectDestroy: effects.explotionEntitySmall,
+                speed: 400,
+                lifeTime: 3
+              }),
+              amount: 3
+            }
+          }),
+          chanceShot: 0.2
+        })
+
+      }
+    })
   };
   resetGame() {
     this.setShop();
@@ -261,17 +257,7 @@ class Game {
     this.roundPointTotal = 1;
 
     this.spawEntitys.chanceTime(2000);
-    //player
-    let player = new EntityPlayer({
-      size: 120,
-      img: global.atlas.sprites[0],
-      hullSprite: this.sprites.hull
-    })
-
-
-    player.setInit(this.gameWidth / 2, this.gameHeight / 2, 270)
-
-    this.player = global.addObjectGame(player)
+    this.setPlayer();
   };
   pause() {
     if (!this.pauseGame) {
@@ -309,7 +295,7 @@ class Game {
         this.spawEntitys.stop();
 
         setTimeout(() => {
-          if (this.spawEntitys.getTime() > 500) this.spawEntitys.chanceTime(this.spawEntitys.getTime() - 25);
+          if (this.spawEntitys.getTime() > 500) this.spawEntitys.chanceTime(this.spawEntitys.getTime() - 50);
         }, 500)
       }
       if (global.UpdateGame) this.UpdateGame(deltaTime);

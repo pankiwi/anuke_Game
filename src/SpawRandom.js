@@ -5,7 +5,7 @@ function spawEnemyBasic(this_) {
 
   let enemy = new Enemy({
     size: size,
-    img: this_.sprites.junction,
+    img: global.atlas.find("junction"),
     speed: MathFs.randFloat(100, 250),
     effectDestroy: size >= 120 ? effects.explotionEntity : effects.explotionEntitySmall
   });

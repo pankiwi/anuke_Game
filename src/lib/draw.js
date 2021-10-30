@@ -11,8 +11,7 @@ class spriteAnimation {
     this.done = false;
   };
   draw(ctx = new CanvasRenderingContext2D, x, y, rotate, alfa, size) {
-    Draw.DrawImageSheet(ctx, this.img, 0, this.i * this.heightFrame, this.widthFrame, this.heightFrame, x, y, alfa, this.size, rotate)
-
+    Draw.DrawImageSheet(ctx, this.img, 0, this.i * this.heightFrame, this.widthFrame, this.heightFrame, x, y, alfa,size, rotate)
   };
   update(deltaTime) {
     this.counter += this.speedFrame * deltaTime;
@@ -21,6 +20,7 @@ class spriteAnimation {
       this.i++
       if (this.i === this.frames && !this.animationBucle) this.done = true;
       this.i %= this.frames;
+      
     }
   };
   IsDone() {

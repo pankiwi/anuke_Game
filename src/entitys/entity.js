@@ -2,7 +2,7 @@ class Entity extends GameObject {
   constructor(args = { size: 20, effectDestroy: new effect(), img: new Image().src = "../assets/sprites/anuke.png", animation: { width: 0, height: 0, frames: 0, speedFrame: 0, bucle: true } }) {
     super(args);
     /* img */
-    this.img = args.img;
+    this.img = typeof args.img == "object" ? args.img : global.atlas.find(args.img);
     /* alfa */
     this.alfa = 1;
     /*animation*/
@@ -16,6 +16,7 @@ class Entity extends GameObject {
   draw(ctx = new CanvasRenderingContext2D) {
     if (this.animation) {
       this.animator.draw(ctx, this.x, this.y, this.rotation, this.alfa, this.size <= 0 ? 0.1 : this.size);
+      
     } else {
       Draw.DrawImage(ctx, this.img, this.x, this.y, this.alfa, this.size <= 0 ? 0.1 : this.size, this.rotation);
     };
