@@ -90,7 +90,8 @@ class Game {
     }
   };
   InitGame() {
-
+   this.resetBackground();
+   
     this.startGame = true;
 
     document.getElementById("resetGame").addEventListener('click', () => {
@@ -208,7 +209,7 @@ class Game {
       buy: () => {
         this.playerBullets.addBullet({
           type: new BulletRicochet({
-            size: 80,
+            size: 60,
             img: global.atlas.find("router"),
             speed: 400,
             effectDestroy: effects.explotionEntitySmall,
@@ -226,9 +227,10 @@ class Game {
       buy: () => {
         this.playerBullets.addBullet({
           type: new Bullet({
-            size: 60,
+            size: 100,
             img: global.atlas.find("router"),
             speed: 300,
+            trailEffect: effects.trailEffect,
             effectDestroy: effects.explotionEntitySmall,
             fragmet: {
               bullet: new Bullet({
@@ -247,7 +249,19 @@ class Game {
       }
     })
   };
+  resetBackground() {
+    this.backgroundColor = 'rgb(255,255,255)';
+    this.toBackgroundColor = null;
+    //5s
+    this.opacitySteps = parseInt(60 * 5);
+    this.opacityStep = 0;
+    
+    this.timerColor = 0;
+    //20s
+    this.timerColorLimit = parseInt(60 * 15);
+  };
   resetGame() {
+    this.resetBackground();
     this.setShop();
 
     global.points = 0;
@@ -324,10 +338,12 @@ class Game {
 
   }
   DrawGame() {
+    
     Draw.RenderCanvas(this.canvas, this.ctx);
-
-    this.ctx.fillStyle = 'rgba(555,555,555,.22)';
-    this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    
+    this.DrawBackGround();
+    
+    
 
 
     global.ObjectGame.forEach((object, indexObject) => {
@@ -349,7 +365,10 @@ class Game {
   };
 
   UpdateGame(deltaTime) {
-
+    if(this.timerColor++ >= this.timerColorLimit){
+      this.timerColor = 0;
+      this.chanceColorBackground();
+    }
     /** remove object **/
     global.removeObjectGame();
 
@@ -360,4 +379,44 @@ class Game {
       //  console.log(object)
     });
   };
+  chanceColorBackground() {
+    this.toBackgroundColor = `hsl(${ Math.random() * 360}, 100%, 97%)`
+  };
+  DrawBackGround() {
+    if (this.toBackgroundColor != null && this.toBackgroundColor != this.backgroundColor) {
+     
+      // calculate the current opacity as a percentage
+      // of opacityStep/opacitySteps
+      var opacity = 100 * (this.opacityStep / this.opacitySteps);
+      if (this.opacityStep >= this.opacitySteps - 1) { opacity = 100; }
+  
+      this.ctx.clearRect(0, 0, this.ctx.canvas.with, this.ctx.canvas.height);
+      this.ctx.save();
+  
+      // draw with the starting color using a lessening opacity
+      this.ctx.globalAlpha = (100 - opacity) / 100;
+      this.ctx.fillStyle = this.backgroundColor;
+      this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+      
+  
+      // draw with the ending color using a increasing opacity
+      this.ctx.globalAlpha = (opacity) / 100;
+      this.ctx.fillStyle = this.toBackgroundColor;
+      this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+      this.ctx.restore();
+  
+  
+      // return if all steps have been played
+      if (++this.opacityStep >= this.opacitySteps) {
+        this.backgroundColor = this.toBackgroundColor;
+        this.toBackgroundColor = null;
+        this.opacityStep = 0;
+      }
+    } else {
+      this.ctx.clearRect(0, 0, this.ctx.canvas.with, this.ctx.canvas.height);
+      this.ctx.fillStyle = this.backgroundColor;
+      this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    }
+  }
+  
 };

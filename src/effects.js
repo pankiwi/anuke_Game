@@ -79,5 +79,22 @@ let effects = {
   
       particle.at(x, y, Math.random() * 360);
     
+  }),
+  trailEffect: new effect(3, (x, y, rotation, data, this_) => {
+  
+  
+    let particle = new Particle({
+      size: data.getSize(),
+      img: data.img,
+      speed: 0,
+      hasAlfa: true,
+      lifeTime: this_.time,
+      animationParticle: {
+        scaleDelta: -20
+      }
+    });
+  
+    particle.at(x, y, data.rotation);
+  
   })
 }

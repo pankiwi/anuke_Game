@@ -1,8 +1,9 @@
 /** basic bullet **/
 class EntityMove extends Entity {
-  constructor(args = { size: 20, effectDestroy: new effect(), img: new Image().src = "../assets/sprites/anuke.png", animation: { width: 0, height: 0, frames: 0, speedFrame: 0 }, speed: 0 }) {
+  constructor(args = { size: 20,trailEffect: new effect(), effectDestroy: new effect(), img: new Image().src = "../assets/sprites/anuke.png", animation: { width: 0, height: 0, frames: 0, speedFrame: 0 }, speed: 0 }) {
     super(args);
     this.speed = args.speed;
+    this.trailEffect = args.trailEffect;
     this.vel = { x: 0, y: 0 };
     this.typeContent = EntityMove;
   };
@@ -16,7 +17,7 @@ class EntityMove extends Entity {
   };
   update(deltaTime, ecene) {
     this.move(deltaTime);
-
+    //if(Math.random() > 0.5) this.trailEffect.at(this.x, this.y,0, this);
     super.update(deltaTime, ecene);
   };
   at(x, y, rotation, vel) {
