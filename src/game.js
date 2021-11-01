@@ -125,6 +125,7 @@ class Game {
         let rot = MathFs.getAngle(event.clientX, innerWidth / 2, event.clientY, innerHeight / 2);
         this.player.setRotation(rot);
         this.playerBullets.atShot(this.gameWidth / 2, this.gameHeight / 2, rot)
+        global.sound.play('shot',0.1)
       }
     })
 
@@ -265,7 +266,7 @@ class Game {
     this.setShop();
 
     global.points = 0;
-    global.coinsAnuke = 99999;
+    global.coinsAnuke = 0;
     global.clearObjects();
     this.round = 1;
     this.roundPointTotal = 1;
